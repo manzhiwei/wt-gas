@@ -1,0 +1,10 @@
+com\welltech\service\AlarmManageService.class
+com\welltech\service\TaskHandleService.class
+com\welltech\common\MessageContants.class
+com\welltech\WaterAffairApplication.class
+com\welltech\task\ShutdownAlarmJob.class
+com\welltech\dao\AlarmDao.class
+com\welltech\common\QuartzConfiguration.class
+com\welltech\service\AlarmService.class
+com\welltech\task\HeartbeatTask.class
+com\welltech\common\QuartzManager.class

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.welltech.dao.history.WtControlDao">
+
+    <select id="findPageWtControl" parameterType="map" resultType="WtControlDto">
+        select s.id pointId,point ,wc.* from wt_station s
+        left join wt_control wc
+        on wc.mcu_id = s.gateway_serial
+        <where>
+            s.point is not null
+            <if test="pointIds != null and pointIds.length > 0">
+                and s.id in
+                <foreach collection="pointIds" item="pointId" separator="," open="(" close=")" index="index">
+                    ${pointId}
+                </foreach>
+            </if>
+            <if test="startTime != null">
+                and wc.time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                and wc.time &lt;= #{endTime}
+            </if>
+        </where>
+        order by wc.time desc
+    </select>
+
+</mapper>

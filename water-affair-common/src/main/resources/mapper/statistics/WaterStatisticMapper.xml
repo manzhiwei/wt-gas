@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.welltech.dao.statistics.WaterStatisticDao">
+
+	<select id="findWaterStatistic" resultType="map">
+		select
+		  	cl.mcu,cl.val, wwt.level as level,cl.datats
+		from (
+			select ifnull(wl.level_code,1) as level_code,
+					ws.station_judge_type as type_code,
+					wl.did,
+					wl.val,
+					wl.datats,
+					wl.mcu
+			from wt_station ws
+			left join (
+				select l.level_code,mcu,d.did,d.val,d.datats
+				from (
+					select
+						${param} as val,
+						'${param}' as param,
+						mcu as mcu,
+						id as did,
+						time as datats
+					from wt_data_raw
+					where time &gt;= #{startTime}
+						and time &lt;= #{endTime}
+						and ${param} is not null
+				) d
+				left join wt_water_level l
+				on d.param = l.param
+					and l.type_code = #{typeCode}
+					and (l.has_upper='1' or l.has_lower='1')
+					and ( l.has_upper &lt;&gt; '1'
+						or ( l.contain_upper = '1' and d.val &lt;= l.upper_limit)
+						or ( l.contain_upper &lt;&gt; '1' and d.val &lt; l.upper_limit)
+						)
+					and ( l.has_lower &lt;&gt; '1'
+						or ( l.contain_lower = '1' and d.val &gt;= l.lower_limit)
+						or ( l.contain_lower &lt;&gt; '1' and d.val &gt; l.lower_limit)
+						)
+				group by d.did
+			) wl
+			on ws.gateway_serial=wl.mcu
+			where ws.station_standard='1'
+				and ws.station_judge_type=#{typeCode}
+				and (
+					1 = 2
+					<if test="companyIds != null and companyIds.size > 0">
+						or ws.company_id in
+						<foreach collection="companyIds" item="item" separator="," open="(" close=")" index="index">
+							#{item}
+						</foreach>
+					</if>
+					<if test="stationIds != null and stationIds.size > 0">
+						or ws.id in
+						<foreach collection="stationIds" item="item" separator="," open="(" close=")" index="index">
+							#{item}
+						</foreach>
+					</if>
+				)
+				AND wl.mcu is not null
+		) cl
+		left join wt_water_type wwt
+			on cl.level_code=wwt.level_code
+			and cl.type_code=wwt.type_code
+		order by cl.mcu,cl.datats ASC
+	</select>
+
+</mapper>

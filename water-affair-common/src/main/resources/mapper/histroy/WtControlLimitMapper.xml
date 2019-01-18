@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.welltech.dao.history.WtControlLimitDao">
+        <select id="findPageWtControlLimit" parameterType="map" resultType="com.welltech.dto.WtControlLimitDto">
+            SELECT s.id pointId,POINT ,wcl.* FROM wt_station s
+            LEFT JOIN wt_control_limit wcl
+            ON wcl.mcu_id = s.gateway_serial
+            <where>s.point IS NOT NULL
+                <if test="pointIds != null and pointIds.length > 0">
+                    AND s.id IN
+                    <foreach collection="pointIds" item="pointId" separator="," open="(" close=")" index="index">
+                        ${pointId}
+                    </foreach>
+                </if>
+                <if test="startTime != null">
+                    AND wcl.receive_time &gt;= #{startTime}
+                </if>
+                <if test="endTime != null">
+                    AND wcl.receive_time &lt;= #{endTime}
+                </if>
+            </where>
+            ORDER BY wcl.receive_time DESC
+        </select>
+
+
+</mapper>

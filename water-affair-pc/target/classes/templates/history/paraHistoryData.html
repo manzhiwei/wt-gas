@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head th:include="common/head :: head"></head>
+
+<body>
+<div id="wrapper">
+    <div th:replace="common/left :: left"></div>
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="row border-bottom">
+            <div th:replace="common/top :: head"></div>
+        </div>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>气体参数信息</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="/index.html">首页</a>
+                    </li>
+                    <li>
+                        <a>历史查询</a>
+                    </li>
+                    <li class="active">
+                        <strong>气体参数信息</strong>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>气体参数信息</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <form id="searchForm" action="/paraHistoryData.html" method="POST" class="form-horizontal m-b">
+                                <div class="row m-b-xs">
+                                    <div class="col-sm-6 m-b-xs">
+                                        <div class="input-group">
+                                            <select data-placeholder="选择测点" id="pointIds"  style="display:none;min-width:475px;">
+                                                <option th:each="point: ${points}" th:text="${point.point}" th:value="${point.id}" th:selected="${not #arrays.isEmpty(pointIds) and #arrays.contains(pointIds, point.id)}"></option>
+                                            </select>
+                                            <label for="pointName" class="col-lg-4 control-label">测点名称</label>
+                                            <div class="col-lg-8">
+                                                <input id="pointName" type="text" name="pointName" readonly="" th:value="${pointName}" class="form-control" onclick="showMenu();" />
+                                                <input id="pointId" type="hidden" name="pointId" th:value="${pointId}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 m-b-xs">
+                                        <div class="input-group">
+                                            <input type="text" name="startTime" AUTOCOMPLETE="off"  th:unless="${startTime == null}" th:value="${#dates.format(startTime, 'yyyy-MM-dd HH:mm:ss')}" placeholder="开始时间" class="form-control datetimepicker"/>
+                                            <input type="text" name="startTime" AUTOCOMPLETE="off" th:if="${startTime == null}" value="" placeholder="开始时间" class="form-control datetimepicker"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 m-b-xs">
+                                        <div class="input-group">
+                                            <input type="text" name="endTime" AUTOCOMPLETE="off" th:unless="${endTime == null}" th:value="${#dates.format(endTime, 'yyyy-MM-dd HH:mm:ss')}" placeholder="结束时间" class="form-control datetimepicker"/>
+                                            <input type="text" name="endTime" AUTOCOMPLETE="off" th:if="${endTime == null}" value="" placeholder="结束时间" class="form-control datetimepicker"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="input-group">
+                                            <button type="button" id="searchBtn" class="btn btn-sm btn-w-m btn-primary ladda-button" data-style="zoom-in" >查询</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input name="currentPage" type="hidden" th:value="${myPage.currentPage}"/>
+                            </form>
+                            <div class="table-responsive text-nowrap text-center">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>测点名称 </th>
+                                        <th>采集时间</th>
+                                        <th>甲烷浓度出口(mg/m3)</th>
+                                        <th>甲烷浓度入口(mg/m3)</th>
+                                        <th>非甲烷总烃浓度出口(mg/m3)</th>
+                                        <th>非甲烷总烃浓度入口(mg/m3)</th>
+                                        <th>总烃浓度出口(mg/m3)</th>
+                                        <th>总烃浓度入口(mg/m3)</th>
+                                        <th>甲苯浓度出口(mg/m3)</th>
+                                        <th>甲苯浓度入口(mg/m3)</th>
+                                        <th>乙苯浓度出口(mg/m3)</th>
+                                        <th>乙苯浓度入口(mg/m3)</th>
+                                        <th>苯浓度出口(mg/m3)</th>
+                                        <th>苯浓度入口(mg/m3)</th>
+                                        <th>临二甲苯浓度出口(mg/m3)</th>
+                                        <th>临二甲苯浓度入口(mg/m3)</th>
+                                        <th>间二甲苯浓度出口(mg/m3)</th>
+                                        <th>间二甲苯浓度入口(mg/m3)</th>
+                                        <th>对二甲苯浓度出口(mg/m3)</th>
+                                        <th>对二甲苯浓度入口(mg/m3)</th>
+                                        <th>烟气温度出口(℃)</th>
+                                        <th>烟气温度入口(℃)</th>
+                                        <th>烟气压力出口(Pa)</th>
+                                        <th>烟气压力入口(Pa)</th>
+                                        <th>烟气流速出口(m/s)</th>
+                                        <th>烟气流速入口(m/s)</th>
+                                        <th>烟气湿度出口(%)</th>
+                                        <th>烟气湿度入口(%)</th>
+                                        <th>烟气含氧量出口(%)</th>
+                                        <th>烟气含氧量入口(%)</th>
+                                        <th>工况烟气流量出口(m3/h)</th>
+                                        <th>工况烟气流量入口(m3/h)</th>
+                                        <th>标态烟气流量出口(m3/h)</th>
+                                        <th>标态烟气流量入口(m3/h)</th>
+                                        <th>非甲烷总烃排放速率出口(kg/h)</th>
+                                        <th>非甲烷总烃排放速率入口(kg/h)</th>
+                                        <th>SO2浓度出口(mg/m3)</th>
+                                        <th>SO2浓度入口(mg/m3)</th>
+                                        <th>NO浓度出口(mg/m3)</th>
+                                        <th>NO浓度入口(mg/m3)</th>
+                                        <th>NOX浓度出口(mg/m3)</th>
+                                        <th>NOX浓度入口(mg/m3)</th>
+                                        <th>甲醇浓度出口(mg/m3)</th>
+                                        <th>甲醇浓度入口(mg/m3)</th>
+                                        <th>苯乙烯浓度出口(mg/m3)</th>
+                                        <th>苯乙烯浓度入口(mg/m3)</th>
+                                        <th>RTO效率</th>
+                                        <th>空气1流量(ml/min)</th>
+                                    <!--    <th>空气2流量(ml/min)</th>-->
+                                        <th>氢气1流量(ml/min)</th>
+                                   <!--     <th>氢气2流量(ml/min)</th>-->
+                                        <th>柱前压1(Bar)</th>
+                                        <th>柱前压2(Bar)</th>
+                                      <!--  <th>柱前压3(Bar)</th>-->
+                                        <th>fid1箱温度(℃)</th>
+                                        <th>fid1火焰温度(℃)</th>
+                                       <!-- <th>fid2火焰温度(℃)</th>-->
+                                        <th>柱箱温度(℃)</th>
+                                        <th>阀箱温度(℃)</th>
+
+
+                                       <!-- <th>O2浓度(mg/m3)</th>-->
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:if="${not #lists.isEmpty(datas)}" th:each="data: ${datas}">
+                                        <td th:text="${data.point}">-</td>
+                                        <td>
+                                            <span th:if="${data.time} != null" th:text="${#dates.format(data.time, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                                            <span th:if="${data.time} == null">-</span>
+                                        </td>
+                                        <td th:text="${data.methaneConc}">-</td>
+                                        <td th:text="${data.methaneConcIn}">-</td>
+                                        <td th:text="${data.nonMethaneConc}">-</td>
+                                        <td th:text="${data.nonMethaneConcIn}">-</td>
+                                        <td th:text="${data.totalHydrocarbonConc}">-</td>
+                                        <td th:text="${data.totalHydrocarbonConcIn}">-</td>
+                                        <td th:text="${data.methylbenzeneConc}">-</td>
+                                        <td th:text="${data.methylbenzeneConcIn}">-</td>
+                                        <td th:text="${data.ethylbenzeneConc}">-</td>
+                                        <td th:text="${data.ethylbenzeneConcIn}">-</td>
+                                        <td th:text="${data.benzeneConc}">-</td>
+                                        <td th:text="${data.benzeneConcIn}">-</td>
+                                        <td th:text="${data.inXyleneConc}">-</td>
+                                        <td th:text="${data.inXyleneConcIn}">-</td>
+                                        <td th:text="${data.mXyleneConc}">-</td>
+                                        <td th:text="${data.mXyleneConcIn}">-</td>
+                                        <td th:text="${data.pXyleneConc}">-</td>
+                                        <td th:text="${data.pXyleneConcIn}">-</td>
+                                        <td th:text="${data.smokeTemp}">-</td>
+                                        <td th:text="${data.smokeTempIn}">-</td>
+                                        <td th:text="${data.smokePress}">-</td>
+                                        <td th:text="${data.smokePressIn}">-</td>
+                                        <td th:text="${data.smokeFlow}">-</td>
+                                        <td th:text="${data.smokeFlowIn}">-</td>
+                                        <td th:text="${data.smokeHumidity}">-</td>
+                                        <td th:text="${data.smokeHumidityIn}">-</td>
+                                        <td th:text="${data.smokeOxygen}">-</td>
+                                        <td th:text="${data.smokeOxygenIn}">-</td>
+                                        <td th:text="${data.workSmokeFlow}">-</td>
+                                        <td th:text="${data.workSmokeFlowIn}">-</td>
+                                        <td th:text="${data.standardSmokeFlow}">-</td>
+                                        <td th:text="${data.standardSmokeFlowIn}">-</td>
+                                        <td th:text="${data.nonMethaneRate}">-</td>
+                                        <td th:text="${data.nonMethaneRateIn}">-</td>
+                                        <td th:text="${data.so2Conc}">-</td>
+                                        <td th:text="${data.so2ConcIn}">-</td>
+                                        <td th:text="${data.noConc}">-</td>
+                                        <td th:text="${data.noConcIn}">-</td>
+                                        <td th:text="${data.noxConc}">-</td>
+                                        <td th:text="${data.noxConcIn}">-</td>
+                                        <td th:text="${data.methylAlcoholConc}">-</td>
+                                        <td th:text="${data.methylAlcoholConcIn}">-</td>
+                                        <td th:text="${data.styreneConc}">-</td>
+                                        <td th:text="${data.styreneConcIn}">-</td>
+                                        <td th:text="${data.rtoEfficiency}">-</td>
+                                        <td th:text="${data.airFlow}">-</td>
+                                        <td th:text="${data.hydrogenFlow}">-</td>
+                                        <td th:text="${data.zhuqianya1}">-</td>
+                                        <td th:text="${data.zhuqianya2}">-</td>
+                                        <td th:text="${data.fidBoxTemp}">-</td>
+                                        <td th:text="${data.fidFireTemp}">-</td>
+                                        <td th:text="${data.zhuxiangTemp}">-</td>
+                                        <td th:text="${data.faxiangTemp}">-</td>
+                                       <!-- <td th:text="${data.o2Conc}">-</td>-->
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 col-sm-offset-8 text-right">
+                                    <ul id="pagination"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+            <ul id="treeDemo" class="ztree" style="margin-top:0; width:175px; height: 300px;border: 1px solid #1ab394;background: #f0f6e4;overflow-y: scroll;overflow-x: auto;"></ul>
+        </div>
+
+        <div th:replace="common/foot :: foot"></div>
+    </div>
+</div>
+
+<div th:replace="common/commonJS :: js"></div>
+
+<script th:inline="javascript">
+	options = {
+	    currentPage: [[${myPage.currentPage}]],
+	    totalPages: [[${myPage.totalPages}]],
+	    onPageChanged: function(e,oldPage,newPage){
+	    	if($('input[name="currentPage"]').val() != newPage){
+		    	$('input[name="currentPage"]').val(newPage);
+		    	$('#searchForm').submit();
+	    	}
+	    }
+	};
+	</script>
+
+<script src="/js/base/stationMultiTree.js"></script>
+<script src="/js/history/historyData.js"></script>
+
+</body>
+</html>

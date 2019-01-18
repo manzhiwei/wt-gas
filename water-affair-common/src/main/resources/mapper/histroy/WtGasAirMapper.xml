@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.welltech.dao.history.WtGasAirDao">
+
+    <select id="findPageWtGasAir" parameterType="map" resultType="com.welltech.dto.WtGasAirDto">
+        select s.id pointId,point ,wga.* from wt_station s
+        left join wt_gas_air wga
+        on wga.mcu_id = s.gateway_serial
+        <where>
+            s.point is not null
+            <if test="pointIds != null and pointIds.length > 0">
+                and s.id in
+                <foreach collection="pointIds" item="pointId" separator="," open="(" close=")" index="index">
+                    ${pointId}
+                </foreach>
+            </if>
+            <if test="startTime != null">
+                and wga.time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                and wga.time &lt;= #{endTime}
+            </if>
+        </where>
+        order by wga.time desc
+    </select>
+
+</mapper>

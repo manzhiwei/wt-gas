@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.welltech.dao.statistics.CommonReportDao">
+	
+    <!-- 获取结点列表 -->
+    <select id="getAreaStationNode" resultType="com.welltech.dto.WtAreaStationDto">
+		select 
+			CONCAT('s',id) id,id t_id,point name,ifnull(company_id,0) p_id,0 nocheck,0 open, station_standard standard
+		from wt_station 
+		UNION
+		select 
+			id,'' t_id,company_name name,ifnull(parent_id,0) p_id,1 nocheck,1 open, 0 standard
+		from wt_company
+    </select>
+
+	<!-- 获取结点列表 根据登录用户-->
+	<select id="getAreaStationNodeByCompanyId" resultType="com.welltech.dto.WtAreaStationDto">
+		SELECT
+		CONCAT('s',id) id,id t_id,POINT NAME,IFNULL(company_id,0) p_id,0 nocheck,0 OPEN, station_standard standard
+		FROM wt_station ws WHERE ws.company_id = #{companyId}
+		UNION
+		SELECT
+		id,'' t_id,company_name NAME,IFNULL(parent_id,0) p_id,1 nocheck,1 OPEN, 0 standard
+		FROM wt_company wc WHERE wc.id = #{companyId}
+	</select>
+	<select id="getAreaStationNodeByParentId" resultType="com.welltech.dto.WtAreaStationDto">
+		SELECT
+		CONCAT('s',ws.id) id,ws.id t_id,POINT NAME,IFNULL(company_id,0) p_id,0 nocheck,0 OPEN, station_standard standard
+		FROM wt_station ws
+		LEFT JOIN wt_company wc ON wc.id = ws.company_id
+		WHERE wc.parent_id = #{companyId}
+		UNION
+		SELECT
+		id,'' t_id,company_name NAME,IFNULL(parent_id,0) p_id,1 nocheck,1 OPEN, 0 standard
+		FROM wt_company wc WHERE wc.parent_id = #{companyId}
+	</select>
+    
+    <select id="getHeichouDisplay" resultType="WtStationMonitor">
+		select 
+			if(m.alias_display='1',m.alias_param_name,p.param_name) param_name,
+			if(m.alias_display='1',m.param_adjust,p.param) param,
+			m.heichou_level,
+			m.station_id
+		from wt_station_monitor m LEFT JOIN wt_param p 
+		on p.param = m.param_adjust
+		where m.station_id=(
+			select id from wt_station where gateway_serial=#{mcu}
+		) and heichou_display = '1' 
+		and m.heichou_display = '1';
+    </select>
+    
+    <select id="isPollution" parameterType="map" resultType="boolean">
+    	select t2.level_code>=t1.${paramName} from 
+		(select ${paramName} from wt_station_monitor where station_id=#{stationId} and param=#{param}) t1,
+		(select level_code from wt_water_type where type_code=#{typeCode} and level=#{result}) t2
+    </select>
+
+	<!--下面这个查找写的太烂了，Man Zhiwei modify by 18-11-14 -->
+	<select id="getAreaNode" resultType="com.welltech.dto.WtAreaStationDto">
+		select
+		id,'' t_id,company_name name,ifnull(parent_id,0) p_id,0 nocheck,1 open
+		from wt_company LEFT JOIN (
+		SELECT
+		company_id,
+		count(*) ct
+		FROM (
+		SELECT
+		company_id,
+		station_judge_type,
+		count(*)
+		FROM wt_station
+		GROUP BY company_id, station_judge_type
+		) t
+		GROUP BY t.company_id
+		) tab on tab.company_id=id
+	</select>
+
+	<select id="getAreaNodeByCompanyId" resultType="com.welltech.dto.WtAreaStationDto">
+		SELECT wt.id,'' t_id,company_name NAME,IFNULL(parent_id,0) p_id,0 nocheck,1 OPEN
+		FROM wt_company wt LEFT JOIN
+		wt_station s
+		ON s.company_id = wt.id WHERE wt.id = #{companyId} GROUP BY s.company_id;
+	</select>
+	<select id="getAreaNodeByParentId" resultType="com.welltech.dto.WtAreaStationDto">
+		SELECT wt.id,'' t_id,company_name NAME,IFNULL(parent_id,0) p_id,0 nocheck,1 OPEN
+		FROM wt_company wt LEFT JOIN
+		wt_station s
+		ON s.company_id = wt.id WHERE wt.parent_id= #{companyId} GROUP BY s.company_id;
+	</select>
+
+
+</mapper>

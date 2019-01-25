@@ -28,6 +28,13 @@ public interface UiElementService {
 	Map<String, WtParam> getParams();
 
 	/**
+	* @Author  Man Zhiwei
+	* @Comment 32路参数表头
+	* @Param
+	* @Date        2019-01-22 14:48
+	*/
+	List<WtParam> getParamList();
+	/**
 	 * 标准站点，分析仪数据菜单信息
 	 * @return
 	 */

@@ -70,6 +70,11 @@ public class UiElementServiceImpl implements UiElementService {
 	}
 
 	@Override
+	public List<WtParam> getParamList() {
+		return wtParamDao.findAllWtParams();
+	}
+
+	@Override
 	public Map<String, WtParam> getParams2() {
 		Map<String, WtParam> result = new LinkedHashMap<>();
 		List<WtParam> params = wtParamDao.findAllWtParams();

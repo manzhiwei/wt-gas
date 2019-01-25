@@ -22,7 +22,9 @@ public interface WtDataRawDao {
 	 * @return
 	 */
 	List<WtDataRawDto> findPageLatestWtDataRaws(Map<String,Object> map);
-	
+
+
+	List<WtDataRawDto> listWtDataRaws(Map<String,Object> map);
 	/**
 	 * 查询数据
 	 */

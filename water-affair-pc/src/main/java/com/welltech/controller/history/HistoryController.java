@@ -1,10 +1,10 @@
 package com.welltech.controller.history;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
+import com.welltech.common.util.DateUtil;
 import com.welltech.common.util.SpringWebUtils;
+import com.welltech.dto.PointDto;
 import com.welltech.entity.WtStation;
 import com.welltech.service.statistics.StationStatisticService;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +20,8 @@ import com.welltech.framework.aop.pagination.bean.MyPage;
 import com.welltech.service.history.HistoryService;
 import com.welltech.service.index.UiElementService;
 import com.welltech.service.realtime.RealtimeService;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.thymeleaf.util.DateUtils;
 
 @Controller
 public class HistoryController {
@@ -36,16 +38,17 @@ public class HistoryController {
 	@Autowired
 	private StationStatisticService stationStatisticService;
 	
-    @RequestMapping(value = {"historyData"})
+  /*  @RequestMapping(value = {"historyData"})
     public String realtimeData(Model model, MyPage myPage,
-    		@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date startTime,
-    		@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date endTime,
-							   String pointName, String pointId){
+    		String startTime,
+    		String endTime,
+			String pointName, String pointId){
     	if(myPage == null){
     		myPage = new MyPage();
     	}
 
-		Integer[] pointIds ;//站点ID集合
+		Integer[] pointIds;//站点ID集合
+		List<PointDto> pointDtoList = new ArrayList<>();
 		if(pointName!=null && StringUtils.isNotBlank(pointId)){
 			String[] pointNames = pointName.split(",");
 			if(pointNames.length>1){
@@ -57,34 +60,107 @@ public class HistoryController {
 				pointIds[i] = Integer.parseInt(stationIds[i]);
 			}
 		}else {
-			pointIds =
+			//当前账户下的所有站点
+			pointDtoList = uiElementService.findAllPointDtos();
+			model.addAttribute("points", pointDtoList);
+			pointIds = new Integer[pointDtoList.size()];
+			if(pointDtoList != null){
+				for (int i = 0;i<pointDtoList.size();i++ ){
+					pointIds[i] = pointDtoList.get(i).getId();
+				}
+			}
 		}
 
-		model.addAttribute("points", uiElementService.findAllPointDtos());
+
 		model.addAttribute("pointIds", pointIds);
 		model.addAttribute("pointId", pointId);
 		model.addAttribute("pointName", pointName);
 
-    	model.addAttribute("params", uiElementService.getParams());
+		//处理表头
+    	model.addAttribute("params", uiElementService.getParamList());
     	List<WtDataRawDto> data=null;
+		Date startTime1;
+		Date endTime1;
+		if(startTime == null){
+			startTime1 = DateUtil.getTodayDate();
+		}else{
+			startTime1 = DateUtil.stringToDate(startTime);
+		}
+		model.addAttribute("startTime",startTime1 );
+		if(endTime == null){
+			endTime1 = new Date();
+		}else{
+			endTime1 = DateUtil.stringToDate(endTime);
+		}
+		model.addAttribute("endTime",endTime1 );
 
     	if(pointIds!=null&&pointIds.length>=1) {
     		data=historyService.listHistoryWtDataRawDto(
     				myPage,
 					new Integer[] {pointIds[0]},
-					startTime,
-					endTime);
+					startTime1,
+					endTime1);
     	}else {
     		data=new ArrayList<WtDataRawDto>();
     	}
 
     	model.addAttribute("datas", data);
     	model.addAttribute("myPage", myPage);
-    	model.addAttribute("startTime", startTime);
-    	model.addAttribute("endTime", endTime);
+
         return "history/historyData";
+    }*/
+    @RequestMapping(value = "historyDataAjax")
+	@ResponseBody
+    public Map<String,Object> historyData(String startTime, String endTime,
+										  String pointName, String pointId){
+    	Map<String,Object> map = new HashMap<String,Object>();
+		Integer[] pointIds;//站点ID集合
+		List<PointDto> pointDtoList = new ArrayList<>();
+		if(pointName!=null && StringUtils.isNotBlank(pointId)){
+			String[] stationIds = pointId.split(",");
+			pointIds = new Integer[stationIds.length];
+			for(int i = 0; i < stationIds.length; i ++) {
+				pointIds[i] = Integer.parseInt(stationIds[i]);
+			}
+		}else {
+			//当前账户下的所有站点
+			pointDtoList = uiElementService.findAllPointDtos();
+			pointIds = new Integer[pointDtoList.size()];
+			if(pointDtoList != null){
+				for (int i = 0;i<pointDtoList.size();i++ ){
+					pointIds[i] = pointDtoList.get(i).getId();
+				}
+			}
+		}
+
+		//处理表头
+		map.put("params",uiElementService.getParamList());
+
+		//处理表数据
+    	List<WtDataRawDto> data=null;
+		Date startTime1;
+		Date endTime1;
+		if("".equals(startTime)||startTime == null){
+			startTime1 = DateUtil.getTodayDate();
+		}else{
+			startTime1 = DateUtil.stringToDate(startTime);
+		}
+		if("".equals(endTime)||endTime == null){
+			endTime1 = new Date();
+		}else{
+			endTime1 = DateUtil.stringToDate(endTime);
+		}
+    	if(pointIds!=null&&pointIds.length>=1) {
+    		//按照多个站点选取来进行 后台不进行分页，分页由前台处理
+			data = historyService.listHistoryWtDataRawDto(pointIds,startTime1,endTime1);
+    	}else {
+    		data=new ArrayList<WtDataRawDto>();
+    	}
+		map.put("datas",data);
+        return map;
     }
-    /*@RequestMapping(value = {"historyData"})
+
+    @RequestMapping(value = {"historyData"})
     public String realtimeData(Model model, MyPage myPage, Integer[] pointIds,
     		@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date startTime,
     		@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date endTime,
@@ -153,7 +229,7 @@ public class HistoryController {
     	model.addAttribute("startTime", startTime);
     	model.addAttribute("endTime", endTime);
         return "history/historyData";
-    }*/
+    }
 
 	@RequestMapping(value = {"analyHistoryData"})
 	public String realtime1Data(Model model, MyPage myPage, Integer[] pointIds,

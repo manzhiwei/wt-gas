@@ -97,9 +97,42 @@ public class HistoryServiceImpl implements HistoryService{
 		return result;
 	}
 
+	@Override
+	public List<WtDataRawDto> listHistoryWtDataRawDto(Integer[] pointIds, Date startTime, Date endTime) {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		map.put("pointIds", pointIds);
+		startTime = getToDay(startTime);
+		map.put("startTime", startTime);
+		map.put("endTime", endTime);
+		List<WtDataRawDto> result = wtDataRawDao.listWtDataRaws(map);
+
+		if(result != null){
+			Field[] fields = WtDataRaw.class.getDeclaredFields();
+			for (WtDataRawDto dto : result) {
+				Map<String, Object> paramValues = new LinkedHashMap<>();
+
+				for(Field f: fields){
+					f.setAccessible(true);
+					if(f.getName().matches("^[p][1-9]?\\d$")){
+						//匹配p1~p32
+						try {
+							paramValues.put(f.getName(), f.get(dto));
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
+
+				dto.setParamValues(paramValues);
+			}
+		}
+
+		return result;
+	}
+
 	/* (non-Javadoc)
-	 * @see com.welltech.service.history.HistoryService#listHistoryWtData(com.welltech.framework.aop.pagination.bean.MyPage, java.lang.Integer, java.util.Date, java.util.Date)
-	 */
+         * @see com.welltech.service.history.HistoryService#listHistoryWtData(com.welltech.framework.aop.pagination.bean.MyPage, java.lang.Integer, java.util.Date, java.util.Date)
+         */
 	@Override
 	public Object listHistoryWtData(MyPage myPage, Integer pointId, Date startTime, Date endTime, String dataType) {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();

@@ -22,7 +22,14 @@ public interface HistoryService {
 	List<WtDataRawDto> listHistoryWtDataRawDto(MyPage myPage,
 											   Integer[] pointIds,
 											   Date startTime, Date endTime);
-
+	/**
+	* @Author  Man Zhiwei
+	* @Comment
+	* @Param
+	* @Date        2019-01-23 16:03
+	*/
+	List<WtDataRawDto> listHistoryWtDataRawDto(Integer[] pointIds,
+											   Date startTime, Date endTime);
 	/**
 	 * @param myPage
 	 * @param pointId

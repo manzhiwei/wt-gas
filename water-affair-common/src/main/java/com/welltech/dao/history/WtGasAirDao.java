@@ -7,5 +7,5 @@ import java.util.Map;
 
 public interface WtGasAirDao {
 
-    List<WtGasAirDto> findPageWtGasAir(Map<String, Object> map);
+    List<WtGasAirDto> listWtGasAir(Map<String, Object> map);
 }

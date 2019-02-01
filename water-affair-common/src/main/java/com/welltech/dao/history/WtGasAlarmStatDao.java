@@ -7,5 +7,5 @@ import java.util.Map;
 
 public interface WtGasAlarmStatDao {
 
-    List<WtGasAlarmStatDto> findPageWtGasAlarmStat(Map<String, Object> map);
+    List<WtGasAlarmStatDto> listWtGasAlarmStat(Map<String, Object> map);
 }

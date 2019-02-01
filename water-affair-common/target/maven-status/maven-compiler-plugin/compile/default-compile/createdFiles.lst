@@ -73,6 +73,7 @@ com\welltech\common\util\OperateCodeEnum.class
 com\welltech\entity\WtUserLog.class
 com\welltech\dao\sysSetting\WtDeviceDao.class
 com\welltech\dto\WtDeviceModbusDto.class
+com\welltech\common\util\DateUtil.class
 com\welltech\dto\PointDto.class
 com\welltech\security\entity\WtUser.class
 com\welltech\framework\aop\pagination\interceptor\BaseInterceptor$1.class

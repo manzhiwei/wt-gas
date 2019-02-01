@@ -192,7 +192,8 @@ function createChart(){
 		
 		for(var index in selVal){
 			var data = [];
-			for(var dataIndex in rawData){
+			//for(var dataIndex in rawData){
+			for(var dataIndex = rawData.length-1; dataIndex>=0;dataIndex--){
 				if(rawData[dataIndex].dataRaw[selVal[index]] != null){
 					data.push(+((rawData[dataIndex].dataRaw[selVal[index]]).toFixed(4)));
 				}

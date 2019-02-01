@@ -34,6 +34,14 @@ public interface UiElementService {
 	* @Date        2019-01-22 14:48
 	*/
 	List<WtParam> getParamList();
+
+	/**
+	* @Author  Man Zhiwei
+	* @Comment 历史数据，日，时，分
+	* @Param
+	* @Date        2019-01-31 10:33
+	*/
+	List<WtParam> getParamListByShuCaiYi();
 	/**
 	 * 标准站点，分析仪数据菜单信息
 	 * @return

@@ -78,58 +78,68 @@
 										</div>
 										<div class="col-sm-2">
 											<div class="input-group">
-												<button type="button" id="expBtn" class="btn btn-sm btn-w-m btn-primary ladda-button" data-style="zoom-in" >导出</button>
-											</div>
-										</div>
-										<div class="col-sm-2">
-											<div class="input-group">
 												<button type="button" id="searchBtn" class="btn btn-sm btn-w-m btn-primary ladda-button" data-style="zoom-in" >查询</button>
 											</div>
 										</div>
 									</div>
 									<input name="currentPage" type="hidden" th:value="${myPage.currentPage}"/>
 								</form>
+								<div class="row m-b-xs">
+									<div class="col-sm-12 m-b-xs">
+										<div  class="input-group" id ="tableSelect">
+											<!--<div class="checkbox-inline i-checks"><label> <input type="checkbox" th:checked="${queryDto.firstLoad or queryDto.showMin}" name="showMin"/> <i></i>最小值</label></div>-->
+										</div>
+									</div>
+								</div>
 								<div class="table-responsive text-nowrap text-center">
-									<table class="table table-striped">
+									<table id="dataTable" class="table table-striped table-list table-bordered" width="100%">
+										 <thead>
+									           <tr id="colTr">
+										           </tr>
+									    </thead>
+										  <tbody id="colTb">  
+									    </tbody>  
+									</table>
+									<!--<table class="table table-striped">
 										<thead>
 										<tr>
 											<th>单位 </th>
 											<th>测点名称 </th>
-											<th>项目编号</th>
+											&lt;!&ndash;<th>项目编号</th>&ndash;&gt;
 											<th>采集时间</th>
-											<!-- 参数由后台配置 -->
+											&lt;!&ndash; 参数由后台配置 &ndash;&gt;
 											<th th:each="item: ${params.values()}" th:if="${#strings.equals('1',item.display)}">
 												<span th:text="${item.paramName}"></span>
 												<span th:if="${not #strings.isEmpty(item.unit)}" th:text="' (' + ${item.unit} + ')'"></span>
 											</th>
 											
-											<!--<th>手机卡号</th>-->
+											&lt;!&ndash;<th>手机卡号</th>&ndash;&gt;
 										</tr>
 										</thead>
 										<tbody>
 											<tr th:if="${not #lists.isEmpty(datas)}" th:each="data: ${datas}">
 												<td th:text="${data.companyName}">-</td>
 												<td th:text="${data.point}">-</td>
-												<td th:text="${data.projectCode}">-</td>
+												&lt;!&ndash;<td th:text="${data.projectCode}">-</td>&ndash;&gt;
 												<td>
 													<span th:if="${data.time} != null" th:text="${#dates.format(data.time, 'yyyy-MM-dd HH:mm:ss')}"></span>
 													<span th:if="${data.time} == null">-</span>
 												</td>
-												<!-- 参数由后台配置 -->
+												&lt;!&ndash; 参数由后台配置 &ndash;&gt;
 												<td th:each="item: ${data.paramValues.entrySet()}" th:if="${#strings.equals('1',params.get(item.getKey()).display)}">
-													<span th:if="${item.getValue()} != null and ${item.getKey()} "  th:text="${#numbers.formatDecimal(item.getValue(),1,2)}"></span><!-- 不为空 and ${item.getKey() != p22 -->
-													<span th:if="${item.getValue()} == null">-</span><!-- 为空 -->
+													<span th:if="${item.getValue()} != null and ${item.getKey()} "  th:text="${#numbers.formatDecimal(item.getValue(),1,2)}"></span>&lt;!&ndash; 不为空 and ${item.getKey() != p22 &ndash;&gt;
+													<span th:if="${item.getValue()} == null">-</span>&lt;!&ndash; 为空 &ndash;&gt;
 												</td>
 											</tr>
 										</tbody>
-									</table>
+									</table>-->
 								</div>
-								<div class="row">
+								<!--<div class="row">
 									<div class="col-sm-4 col-sm-offset-8 text-right">
 										<ul id="pagination"></ul>
 									</div>
 
-								</div>
+								</div>-->
 							</div>
 						</div>
 					</div>
@@ -146,22 +156,10 @@
     </div>
 
 	<div th:replace="common/commonJS :: js"></div>
-	
-	<script th:inline="javascript">
-		options = {
-			currentPage: [[${myPage.currentPage}]],
-			totalPages: [[${myPage.totalPages}]],
-			onPageChanged: function(e,oldPage,newPage){
-				if($('input[name="currentPage"]').val() != newPage){
-					$('input[name="currentPage"]').val(newPage);
-					$('#searchForm').submit();
-				}
-			}
-        };
-	</script>
+
 
 	<script src="/js/base/stationMultiTree.js"></script>
-	<script src="/js/history/historyData.js"></script>
+	<script src="/js/history/historyData2.js"></script>
 
 </body>
 </html>

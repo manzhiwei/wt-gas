@@ -83,13 +83,26 @@
                                 </div>
                                 <input name="currentPage" type="hidden" th:value="${myPage.currentPage}"/>
                             </form>
+                            <div class="row m-b-xs">
+                                <div class="col-sm-12 m-b-xs">
+                                    <div  class="input-group" id ="tableSelect">
+                                        <!--<div class="checkbox-inline i-checks"><label> <input type="checkbox" th:checked="${queryDto.firstLoad or queryDto.showMin}" name="showMin"/> <i></i>最小值</label></div>-->
+                                    </div>
+                                </div>
+                            </div>
                             <div class="table-responsive text-nowrap text-center">
-                                <table class="table table-striped">
+                                <table id="dataTable" class="table table-striped table-list table-bordered" width="100%">
                                     <thead>
+                                               <tr id="colTr">
+                                                   </tr>
+                                        </thead>
+                                      <tbody id="colTb">  
+                                    </tbody>  
+                                   <!-- <thead>
                                     <tr>
                                         <th>测点名称 </th>
                                         <th>采集时间</th>
-                                        <!-- 参数由后台配置 -->
+                                        &lt;!&ndash; 参数由后台配置 &ndash;&gt;
                                         <th th:each="item,iterStat: ${params.values()}" th:if="${iterStat.index} gt '31' and ${#strings.equals('1',item.display)}">
                                             <span th:text="${item.paramName}"></span>
                                             <span th:if="${not #strings.isEmpty(item.unit)}" th:text="' (' + ${item.unit} + ')'"></span>
@@ -106,16 +119,16 @@
                                         <td th:each="item,iterStat: ${data.paramValues.entrySet()}" th:if="${#strings.equals('1',params.get(item.getKey()).display)}">
 
                                             <span th:unless= "${item.getValue()} == null" th:text="${#numbers.formatDecimal(item.getValue(),1,2)}"></span>
-                                            <!--${item.getValue()} != null and -->
-                                            <!--<span th:if="${item.getValue()} != null and ${item.getKey()} ne 'p20' and ${item.getKey()} ne 'p22' "  th:text="${#numbers.formatDecimal(item.getValue(),1,2)}"></span>&lt;!&ndash; 不为空 and ${item.getKey() != p22 &ndash;&gt;
-                                            <span th:if="${item.getValue()} != null and ${item.getKey()} eq 'p20'"  th:text="${#numbers.formatDecimal(item.getValue(),1,0) == 1 ? '开':'关' }"></span>&lt;!&ndash; 不为空 &ndash;&gt;-->
-                                            <!--<span th:if="${item.getValue()} != null" th:if="${item.getKey() == 'p20'}" th:text="${#numbers.formatDecimal(item.getValue(),1,0) == 1 ? '开':'关' }"></span>&lt;!&ndash; 不为空且是p20(水泵状态) &ndash;&gt;-->
-                                            <!--<span th:if="${item.getValue()} != null and ${item.getKey()} eq 'p22'and ${#numbers.formatDecimal(item.getValue(),1,2)} gt -0.00 "  th:text="${#numbers.formatDecimal(item.getValue(),1,2)}"></span>-->
-                                            <!--<span th:if="${item.getValue()} != null and ${item.getKey()} eq 'p22'and ${#numbers.formatDecimal(item.getValue(),1,2)} le -0.00 "  th:text="0.00"></span>-->
-                                            <span th:if="${item.getValue()} == null">-</span><!-- 为空 -->
+                                            &lt;!&ndash;${item.getValue()} != null and &ndash;&gt;
+                                            &lt;!&ndash;<span th:if="${item.getValue()} != null and ${item.getKey()} ne 'p20' and ${item.getKey()} ne 'p22' "  th:text="${#numbers.formatDecimal(item.getValue(),1,2)}"></span>&lt;!&ndash; 不为空 and ${item.getKey() != p22 &ndash;&gt;
+                                            <span th:if="${item.getValue()} != null and ${item.getKey()} eq 'p20'"  th:text="${#numbers.formatDecimal(item.getValue(),1,0) == 1 ? '开':'关' }"></span>&lt;!&ndash; 不为空 &ndash;&gt;&ndash;&gt;
+                                            &lt;!&ndash;<span th:if="${item.getValue()} != null" th:if="${item.getKey() == 'p20'}" th:text="${#numbers.formatDecimal(item.getValue(),1,0) == 1 ? '开':'关' }"></span>&lt;!&ndash; 不为空且是p20(水泵状态) &ndash;&gt;&ndash;&gt;
+                                            &lt;!&ndash;<span th:if="${item.getValue()} != null and ${item.getKey()} eq 'p22'and ${#numbers.formatDecimal(item.getValue(),1,2)} gt -0.00 "  th:text="${#numbers.formatDecimal(item.getValue(),1,2)}"></span>&ndash;&gt;
+                                            &lt;!&ndash;<span th:if="${item.getValue()} != null and ${item.getKey()} eq 'p22'and ${#numbers.formatDecimal(item.getValue(),1,2)} le -0.00 "  th:text="0.00"></span>&ndash;&gt;
+                                            <span th:if="${item.getValue()} == null">-</span>&lt;!&ndash; 为空 &ndash;&gt;
                                         </td>
                                     </tr>
-                                    </tbody>
+                                    </tbody>-->
                                 </table>
                             </div>
                             <div class="row">
@@ -154,7 +167,7 @@
 	</script>
 
 <script src="/js/base/stationMultiTree.js"></script>
-<script src="/js/history/historyData.js"></script>
+<script src="/js/history/dataCollectionHistory.js"></script>
 
 </body>
 </html>

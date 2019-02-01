@@ -23,6 +23,27 @@
         </where>
         order by wpd.time desc
     </select>
+    <select id="listWtProtocolDay" parameterType="map" resultType="com.welltech.dto.WtProtocolDayDto">
+        select s.id pointId,point ,wpd.* from wt_station s
+        left join wt_protocol_day wpd
+        on wpd.mcu = s.gateway_serial
+        <where>
+            s.point is not null
+            <if test="pointIds != null and pointIds.length > 0">
+                and s.id in
+                <foreach collection="pointIds" item="pointId" separator="," open="(" close=")" index="index">
+                    ${pointId}
+                </foreach>
+            </if>
+            <if test="startTime != null">
+                and wpd.time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                and wpd.time &lt;= #{endTime}
+            </if>
+        </where>
+        order by wpd.time desc
+    </select>
 
     <select id="findPageWtProtocolHour" parameterType="map" resultType="com.welltech.dto.WtProtocolDayDto">
         select s.id pointId,point ,wpd.* from wt_station s
@@ -45,8 +66,50 @@
         </where>
         order by wpd.time desc
     </select>
+    <select id="listWtProtocolHour" parameterType="map" resultType="com.welltech.dto.WtProtocolDayDto">
+        select s.id pointId,point ,wpd.* from wt_station s
+        left join wt_protocol_hour wpd
+        on wpd.mcu = s.gateway_serial
+        <where>
+            s.point is not null
+            <if test="pointIds != null and pointIds.length > 0">
+                and s.id in
+                <foreach collection="pointIds" item="pointId" separator="," open="(" close=")" index="index">
+                    ${pointId}
+                </foreach>
+            </if>
+            <if test="startTime != null">
+                and wpd.time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                and wpd.time &lt;= #{endTime}
+            </if>
+        </where>
+        order by wpd.time desc
+    </select>
 
     <select id="findPageWtProtocolMinuter" parameterType="map" resultType="com.welltech.dto.WtProtocolDayDto">
+        select s.id pointId,point ,wpd.* from wt_station s
+        left join wt_protocol_minuter wpd
+        on wpd.mcu = s.gateway_serial
+        <where>
+            s.point is not null
+            <if test="pointIds != null and pointIds.length > 0">
+                and s.id in
+                <foreach collection="pointIds" item="pointId" separator="," open="(" close=")" index="index">
+                    ${pointId}
+                </foreach>
+            </if>
+            <if test="startTime != null">
+                and wpd.time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                and wpd.time &lt;= #{endTime}
+            </if>
+        </where>
+        order by wpd.time desc
+    </select>
+    <select id="listWtProtocolMinuter" parameterType="map" resultType="com.welltech.dto.WtProtocolDayDto">
         select s.id pointId,point ,wpd.* from wt_station s
         left join wt_protocol_minuter wpd
         on wpd.mcu = s.gateway_serial

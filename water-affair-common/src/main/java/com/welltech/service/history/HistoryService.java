@@ -53,13 +53,13 @@ public interface HistoryService {
 
 	List<WtControlLimitDto> listHistoryWtControlLimit(MyPage myPage, Integer[] pointIds, Date startTime, Date endTime);
 
-	List<WtProtocolDayDto> listdataCollectionHistory(MyPage myPage, Integer[] pointIds, Date startTime, Date endTime);
+	/*List<WtProtocolDayDto> listdataCollectionHistory(MyPage myPage, Integer[] pointIds, Date startTime, Date endTime);*/
 
-	List<WtProtocolDayDto> listdataCollectionHistory(MyPage myPage, Integer[] pointIds, Date startTime, Date endTime,String queryType);
+	List<WtProtocolDayDto> listdataCollectionHistory(Integer[] pointIds, Date startTime, Date endTime,String queryType);
 
-	List<WtGasAirDto> listGasAirHistory(MyPage myPage, Integer[] pointIds, Date startTime, Date endTime);
+	List<WtGasAirDto> listGasAirHistory(Integer[] pointIds, Date startTime, Date endTime);
 
-	List<WtGasAlarmStatDto> listGasAlarmStatHistory(MyPage myPage, Integer[] pointIds, Date startTime, Date endTime);
+	List<WtGasAlarmStatDto> listGasAlarmStatHistory(Integer[] pointIds, Date startTime, Date endTime);
 
-	List<WtGasVariablesDto> listGasVariablesHistory(MyPage myPage, Integer[] pointIds, Date startTime, Date endTime);
+	List<WtGasVariablesDto> listGasVariablesHistory(Integer[] pointIds, Date startTime, Date endTime);
 }

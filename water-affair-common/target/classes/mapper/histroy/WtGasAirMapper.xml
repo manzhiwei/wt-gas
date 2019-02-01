@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.welltech.dao.history.WtGasAirDao">
 
-    <select id="findPageWtGasAir" parameterType="map" resultType="com.welltech.dto.WtGasAirDto">
+    <select id="listWtGasAir" parameterType="map" resultType="com.welltech.dto.WtGasAirDto">
         select s.id pointId,point ,wga.* from wt_station s
         left join wt_gas_air wga
         on wga.mcu_id = s.gateway_serial

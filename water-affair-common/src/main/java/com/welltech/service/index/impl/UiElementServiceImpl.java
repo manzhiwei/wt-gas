@@ -75,6 +75,44 @@ public class UiElementServiceImpl implements UiElementService {
 	}
 
 	@Override
+	public List<WtParam> getParamListByShuCaiYi() {
+		List<WtParam> params = wtParamDao.findAllWtParams();
+		List<WtParam> params1 = new ArrayList<>();
+		if(params != null){
+			for(int i= 0 ; i<params.size();i++){
+				int temp = i+1;
+				if(params.get(i).getDisplay()!= null && Integer.parseInt(params.get(i).getDisplay())==1){
+					WtParam wt = new WtParam();
+					wt.setParam("p"+temp+"Min");
+					wt.setParamName(params.get(i).getParamName()+"最小值");
+					wt.setUnit(params.get(i).getUnit());
+					params1.add(wt);
+
+					WtParam wt1 = new WtParam();
+					wt1.setParam("p"+temp+"Max");
+					wt1.setParamName(params.get(i).getParamName()+"最大值");
+					wt1.setUnit(params.get(i).getUnit());
+					params1.add(wt1);
+
+
+					WtParam wt2 = new WtParam();
+					wt2.setParam("p"+temp+"Avg");
+					wt2.setParamName(params.get(i).getParamName()+"平均值");
+					wt2.setUnit(params.get(i).getUnit());
+					params1.add(wt2);
+
+					WtParam wt3 = new WtParam();
+					wt3.setParam("p"+temp+"Cou");
+					wt3.setParamName(params.get(i).getParamName()+"累积量");
+					wt3.setUnit(params.get(i).getUnit());
+					params1.add(wt3);
+				}
+			}
+		}
+		return params1;
+	}
+
+	@Override
 	public Map<String, WtParam> getParams2() {
 		Map<String, WtParam> result = new LinkedHashMap<>();
 		List<WtParam> params = wtParamDao.findAllWtParams();

@@ -228,7 +228,7 @@ public class HistoryServiceImpl implements HistoryService{
 		return result;
 	}
 
-	@Override
+	/*@Override
 	public List<WtProtocolDayDto> listdataCollectionHistory(MyPage myPage, Integer[] pointIds, Date startTime, Date endTime) {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
 		Page page = new Pagination();
@@ -261,25 +261,22 @@ public class HistoryServiceImpl implements HistoryService{
 		}
 		myPage.setTotalPages(page.getTotalPages());
 		return result;
-	}
+	}*/
 
 	@Override
-	public List<WtProtocolDayDto> listdataCollectionHistory(MyPage myPage, Integer[] pointIds, Date startTime, Date endTime,String queryType) {
+	public List<WtProtocolDayDto> listdataCollectionHistory(Integer[] pointIds, Date startTime, Date endTime,String queryType) {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
-		Page page = new Pagination();
-		page.setCurrentPage(myPage.getCurrentPage());
-		map.put("page", page);
 		map.put("pointIds", pointIds);
 		startTime = getToDay(startTime);
 		map.put("startTime", startTime);
 		map.put("endTime", endTime);
 		List<WtProtocolDayDto> result = null;
 		if("1".equals(queryType)){
-			result = wtProtocolDayDao.findPageWtProtocolDay(map);
+			result = wtProtocolDayDao.listWtProtocolDay(map);
 		}else if("0".equals(queryType)){
-			result = wtProtocolDayDao.findPageWtProtocolHour(map);
+			result = wtProtocolDayDao.listWtProtocolHour(map);
 		}else if("2".equals(queryType)){
-			result = wtProtocolDayDao.findPageWtProtocolMinuter(map);
+			result = wtProtocolDayDao.listWtProtocolMinuter(map);
 		}
 
 		if(result != null){
@@ -302,22 +299,18 @@ public class HistoryServiceImpl implements HistoryService{
 				dto.setParamValues(paramValues);
 			}
 		}
-		myPage.setTotalPages(page.getTotalPages());
 		return result;
 	}
 
 	@Override
-	public List<WtGasAirDto> listGasAirHistory(MyPage myPage, Integer[] pointIds, Date startTime, Date endTime) {
+	public List<WtGasAirDto> listGasAirHistory(Integer[] pointIds, Date startTime, Date endTime) {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
 		Page page = new Pagination();
-		page.setCurrentPage(myPage.getCurrentPage());
-		map.put("page", page);
 		map.put("pointIds", pointIds);
 		startTime = getToDay(startTime);
 		map.put("startTime", startTime);
 		map.put("endTime", endTime);
-		List<WtGasAirDto> result = wtGasAirDao.findPageWtGasAir(map);
-		myPage.setTotalPages(page.getTotalPages());
+		List<WtGasAirDto> result = wtGasAirDao.listWtGasAir(map);
 		return result;
 	}
 
@@ -334,32 +327,24 @@ public class HistoryServiceImpl implements HistoryService{
 	}
 
 	@Override
-    public List<WtGasAlarmStatDto> listGasAlarmStatHistory(MyPage myPage, Integer[] pointIds, Date startTime, Date endTime) {
+    public List<WtGasAlarmStatDto> listGasAlarmStatHistory(Integer[] pointIds, Date startTime, Date endTime) {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
-		Page page = new Pagination();
-		page.setCurrentPage(myPage.getCurrentPage());
-		map.put("page", page);
 		map.put("pointIds", pointIds);
 		startTime = getToDay(startTime);
 		map.put("startTime", startTime);
 		map.put("endTime", endTime);
-		List<WtGasAlarmStatDto> result = wtGasAlarmStatDao.findPageWtGasAlarmStat(map);
-		myPage.setTotalPages(page.getTotalPages());
+		List<WtGasAlarmStatDto> result = wtGasAlarmStatDao.listWtGasAlarmStat(map);
 		return result;
     }
 
 	@Override
-	public List<WtGasVariablesDto> listGasVariablesHistory(MyPage myPage, Integer[] pointIds, Date startTime, Date endTime) {
+	public List<WtGasVariablesDto> listGasVariablesHistory(Integer[] pointIds, Date startTime, Date endTime) {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
-		Page page = new Pagination();
-		page.setCurrentPage(myPage.getCurrentPage());
-		map.put("page", page);
 		map.put("pointIds", pointIds);
 		startTime = getToDay(startTime);
 		map.put("startTime", startTime);
 		map.put("endTime", endTime);
-		List<WtGasVariablesDto> result = wtGasVariablesDao.findPageWtGasVariables(map);
-		myPage.setTotalPages(page.getTotalPages());
+		List<WtGasVariablesDto> result = wtGasVariablesDao.listWtGasVariables(map);
 		return result;
 	}
 }

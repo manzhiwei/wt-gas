@@ -69,10 +69,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <input name="currentPage" type="hidden" th:value="${myPage.currentPage}"/>
                             </form>
+                            <div class="row m-b-xs">
+                                <div class="col-sm-12 m-b-xs">
+                                    <div  class="input-group" id ="tableSelect">
+                                        <!--<div class="checkbox-inline i-checks"><label> <input type="checkbox" th:checked="${queryDto.firstLoad or queryDto.showMin}" name="showMin"/> <i></i>最小值</label></div>-->
+                                    </div>
+                                </div>
+                            </div>
                             <div class="table-responsive text-nowrap text-center">
-                                <table class="table table-striped">
+                                <table id="dataTable" class="table table-striped table-list table-bordered" width="100%">
                                     <thead>
                                     <tr>
                                         <th>测点名称 </th>
@@ -114,12 +120,10 @@
                                         <th>柱前压1压力异常</th>
                                         <th>柱前压2压力异常</th>
                                         <!--<th>柱前压3压力异常</th>-->
-
-
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:if="${not #lists.isEmpty(datas)}" th:each="data: ${datas}">
+                                    <!--<tr th:if="${not #lists.isEmpty(datas)}" th:each="data: ${datas}">
                                         <td th:text="${data.point}">-</td>
                                         <td>
                                             <span th:if="${data.time} != null" th:text="${#dates.format(data.time, 'yyyy-MM-dd HH:mm:ss')}"></span>
@@ -144,16 +148,16 @@
                                         <td th:text="${data.kongzhifa2openStat == 0 ? '正常': '不正常'}">-</td>
                                         <td th:text="${data.innerCommExcp == 0 ? '正常': '不正常'}">-</td>
                                         <td th:text="${data.fid1ignitionFalse == 0 ? '正常': '不正常'}">-</td>
-                                        <!--<td th:text="${data.fid2ignitionFalse == 0 ? '正常': '不正常'}">-</td>-->
+                                        &lt;!&ndash;<td th:text="${data.fid2ignitionFalse == 0 ? '正常': '不正常'}">-</td>&ndash;&gt;
                                         <td th:text="${data.fid1fireBreak == 0 ? '正常': '不正常'}">-</td>
-                                        <!--<td th:text="${data.fid2fireBreak == 0 ? '正常': '不正常'}">-</td>-->
+                                        &lt;!&ndash;<td th:text="${data.fid2fireBreak == 0 ? '正常': '不正常'}">-</td>&ndash;&gt;
                                         <td th:text="${data.fid1fireTempExcp == 0 ? '正常': '不正常'}">-</td>
-                                        <!--<td th:text="${data.fid2fireTempExcp == 0 ? '正常': '不正常'}">-</td>-->
+                                        &lt;!&ndash;<td th:text="${data.fid2fireTempExcp == 0 ? '正常': '不正常'}">-</td>&ndash;&gt;
                                         <td th:text="${data.fid1boxTempExcp == 0 ? '正常': '不正常'}">-</td>
-                                        <!--<td th:text="${data.fid2boxTempExcp == 0 ? '正常': '不正常'}">-</td>-->
+                                        &lt;!&ndash;<td th:text="${data.fid2boxTempExcp == 0 ? '正常': '不正常'}">-</td>&ndash;&gt;
                                         <td th:text="${data.shitongfaTempExcp == 0 ? '正常': '不正常'}">-</td>
                                         <td th:text="${data.zhuxiangTempExcp == 0 ? '正常': '不正常'}">-</td>
-                                        <!--<td th:text="${data.zhuxiang2tempExcp == 0 ? '正常': '不正常'}">-</td>-->
+                                        &lt;!&ndash;<td th:text="${data.zhuxiang2tempExcp == 0 ? '正常': '不正常'}">-</td>&ndash;&gt;
                                         <td th:text="${data.jixiangTempExcp == 0 ? '正常': '不正常'}">-</td>
                                         <td th:text="${data.hydrogen1flowExcp == 0 ? '正常': '不正常'}">-</td>
                                         <td th:text="${data.hydrogen2flowExcp == 0 ? '正常': '不正常'}">-</td>
@@ -161,10 +165,10 @@
                                         <td th:text="${data.air2flowExcp == 0 ? '正常': '不正常'}">-</td>
                                         <td th:text="${data.zhuqianya1pressExcp == 0 ? '正常': '不正常'}">-</td>
                                         <td th:text="${data.zhuqianya2pressExcp == 0 ? '正常': '不正常'}">-</td>
-                                        <!--<td th:text="${data.zhuqianya3pressExcp == 0 ? '正常': '不正常'}">-</td>-->
+                                        &lt;!&ndash;<td th:text="${data.zhuqianya3pressExcp == 0 ? '正常': '不正常'}">-</td>&ndash;&gt;
 
 
-                                    </tr>
+                                    </tr>-->
                                     </tbody>
                                 </table>
                             </div>
@@ -190,21 +194,8 @@
 
 <div th:replace="common/commonJS :: js"></div>
 
-<script th:inline="javascript">
-	options = {
-	    currentPage: [[${myPage.currentPage}]],
-	    totalPages: [[${myPage.totalPages}]],
-	    onPageChanged: function(e,oldPage,newPage){
-	    	if($('input[name="currentPage"]').val() != newPage){
-		    	$('input[name="currentPage"]').val(newPage);
-		    	$('#searchForm').submit();
-	    	}
-	    }
-	};
-	</script>
-
 <script src="/js/base/stationMultiTree.js"></script>
-<script src="/js/history/historyData.js"></script>
+<script src="/js/history/alarmHistoryData.js"></script>
 
 </body>
 </html>

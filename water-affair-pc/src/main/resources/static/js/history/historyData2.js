@@ -1,3 +1,23 @@
+$(document).ready(function(){
+      init();
+});
+   /* var isInitFilterSelect=false;*/
+    function initFilterSelect(){
+        var str='<label >显示/隐藏列：</label>';
+        var tableTh=$("#dataTable").find("thead").find("th");
+
+        for(var i=0;i<tableTh.length;i++){//<i class="Hui-iconfont"></i>
+            // str+=' <a class="toggle-vis" data-column="'+i+'">'+$("#dataTable").find("thead").find("th").eq(i).text()+'</a>--'
+           str+=' <a class="toggle-vis" data-column="'+i+'">'+$("#dataTable").find("thead").find("th").eq(i).text()+'</a>--'
+
+           /* str+='<span class="toggle-vis" data-column="'+i+'"><input type="checkbox" checked="checked"  />'+tableTh.eq(i).text()+'</span>'*/
+           // <div class="checkbox-inline i-checks"><label> <input type="checkbox" th:checked="${queryDto.firstLoad or queryDto.showMin}" name="showMin"/> <i></i>最小值</label></div>
+        }
+
+        $("#tableSelect").html(str);
+
+       /* isInitFilterSelect=true;*/
+    }
 function showMenu() {
     var cityObj = $("#pointName");
     var cityOffset = $("#pointName").offset();
@@ -50,10 +70,9 @@ var dataTable;
 $(function(){
     //查询按钮                
     $("#searchBtn").click(function(){
-        debugger;
-             /* validatetable();*/
         init();
-    });
+
+           });
 })
 function init(){
     var pointId= $("input:hidden[name='pointId']").val(),//input type为hidden时的取值方式
@@ -71,7 +90,7 @@ function init(){
         success : function(resdata) {
                     //请求成功后 如果存在datatable结构销毁
                     if(dataTable){
-                    dataTable.destroy();
+                        dataTable.destroy();
                     }
                     //清空table数据
                     $("#colTb").html("");
@@ -189,9 +208,10 @@ function init(){
         }
                 //datatable初始化
                 dataTable = $('#dataTable').DataTable({
+                    dom: '<"html5buttons"B>lTfgtip',
                     "ordering": false,
                     "info": true,
-                    "bLengthChange": false,
+                    "bLengthChange": true,
                     "iDisplayLength":10,
                     "bFilter": true,
                     "retrieve": true,
@@ -213,17 +233,55 @@ function init(){
                             "sPrevious": "前一页",
                             "sNext": "后一页",
                             "sLast": "尾页"
-                       }
+                       },
                      },
+                      buttons: [
+                          'copyHtml5',
+                          'excelHtml5',
+                          'csvHtml5',
+                          'pdfHtml5'
+                      ],
                      data:tableData,
                      columns: colsDef
 
                 });
 
-                //全选
+                /*//全选
                 $('#checkAll').click(function() {
                     $('[name=id]:checkbox').prop('checked', this.checked);
-                    });
+                    });*/
+                initFilterSelect();
+                $('.toggle-vis').on( 'click', function (e) {
+                       /* var input=$("#tableSelect").find("input");
+                         // Get the column API object
+                        var column = dataTable.column( $(this).attr('data-column') );
+
+                        if(($(this).find("input").prop("checked")==false)){
+                                  e.preventDefault();
+                                  column.visible( ! column.visible());
+                        }
+                        if(($(this).find("input").prop("checked")==false)){
+                            $(this).find("input").prop("checked",false);
+                        }else{
+                             $(this).find("input").prop("checked",true);
+                        }
+                        }*/
+                        /* if(column.visible()==true){
+                                 $(this).find("input").prop("checked",false);
+                        }else{
+                                $(this).find("input").prop("checked",true);
+                            }*/
+
+                        e.preventDefault();
+
+                        // Get the column API object
+                        var column = dataTable.column( $(this).attr('data-column') );
+
+                        // Toggle the visibility
+                        column.visible( ! column.visible() );
+                        }
+                   );
+
         },
          error: function () {
 

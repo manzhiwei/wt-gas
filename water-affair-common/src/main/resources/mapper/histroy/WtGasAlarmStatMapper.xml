@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.welltech.dao.history.WtGasAlarmStatDao">
 
-    <select id="findPageWtGasAlarmStat" parameterType="map" resultType="com.welltech.dto.WtGasAlarmStatDto">
+    <select id="listWtGasAlarmStat" parameterType="map" resultType="com.welltech.dto.WtGasAlarmStatDto">
         select s.id pointId,point ,wgas.* from wt_station s
         left join wt_gas_alarm_stat wgas
         on wgas.mcu_id = s.gateway_serial

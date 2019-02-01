@@ -73,6 +73,40 @@
 		</where>
 		order by d.time desc
     </select>
+
+	<select id="listWtDataRaws" parameterType="map" resultType="WtDataRawDto">
+		select
+		s.id pointId,
+		s.point,
+		s.gateway_serial,
+		s.total_flow,
+		c.company_name,
+		d.*
+		from
+		wt_data_raw d
+		left join wt_station s
+		on s.gateway_serial = d.mcu
+		left join wt_company c
+		on s.company_id = c.id
+		left join wt_station_base b
+		on s.id = b.station_id
+		<where>
+			s.point is not null
+			<if test="startTime != null">
+				and d.time &gt;= #{startTime}
+			</if>
+			<if test="endTime != null">
+				and d.time &lt;= #{endTime}
+			</if>
+			<if test="pointIds != null and pointIds.length > 0">
+				and s.id in
+				<foreach collection="pointIds" item="pointId" separator="," open="(" close=")" index="index">
+					${pointId}
+				</foreach>
+			</if>
+		</where>
+		order by d.time desc
+	</select>
     
     <select id="findPageWtDataRaw" parameterType="map" resultType="WtDataRawDto">
     	select *,t.dtime time from (	

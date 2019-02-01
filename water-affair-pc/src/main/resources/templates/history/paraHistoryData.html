@@ -69,10 +69,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <input name="currentPage" type="hidden" th:value="${myPage.currentPage}"/>
                             </form>
+                            <div class="row m-b-xs">
+                                <div class="col-sm-12 m-b-xs">
+                                    <div  class="input-group" id ="tableSelect">
+                                        <!--<div class="checkbox-inline i-checks"><label> <input type="checkbox" th:checked="${queryDto.firstLoad or queryDto.showMin}" name="showMin"/> <i></i>最小值</label></div>-->
+                                    </div>
+                                </div>
+                            </div>
                             <div class="table-responsive text-nowrap text-center">
-                                <table class="table table-striped">
+                                <table id="dataTable" class="table table-striped table-list table-bordered" width="100%">
                                     <thead>
                                     <tr>
                                         <th>测点名称 </th>
@@ -140,7 +146,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:if="${not #lists.isEmpty(datas)}" th:each="data: ${datas}">
+                                   <!-- <tr th:if="${not #lists.isEmpty(datas)}" th:each="data: ${datas}">
                                         <td th:text="${data.point}">-</td>
                                         <td>
                                             <span th:if="${data.time} != null" th:text="${#dates.format(data.time, 'yyyy-MM-dd HH:mm:ss')}"></span>
@@ -199,8 +205,8 @@
                                         <td th:text="${data.fidFireTemp}">-</td>
                                         <td th:text="${data.zhuxiangTemp}">-</td>
                                         <td th:text="${data.faxiangTemp}">-</td>
-                                       <!-- <td th:text="${data.o2Conc}">-</td>-->
-                                    </tr>
+                                       &lt;!&ndash; <td th:text="${data.o2Conc}">-</td>&ndash;&gt;
+                                    </tr>-->
                                     </tbody>
                                 </table>
                             </div>
@@ -226,21 +232,8 @@
 
 <div th:replace="common/commonJS :: js"></div>
 
-<script th:inline="javascript">
-	options = {
-	    currentPage: [[${myPage.currentPage}]],
-	    totalPages: [[${myPage.totalPages}]],
-	    onPageChanged: function(e,oldPage,newPage){
-	    	if($('input[name="currentPage"]').val() != newPage){
-		    	$('input[name="currentPage"]').val(newPage);
-		    	$('#searchForm').submit();
-	    	}
-	    }
-	};
-	</script>
-
 <script src="/js/base/stationMultiTree.js"></script>
-<script src="/js/history/historyData.js"></script>
+<script src="/js/history/paraHistoryData.js"></script>
 
 </body>
 </html>

@@ -7,6 +7,6 @@ import java.util.Map;
 
 public interface WtGasVariablesDao {
 
-    List<WtGasVariablesDto> findPageWtGasVariables(Map<String, Object> map);
+    List<WtGasVariablesDto> listWtGasVariables(Map<String, Object> map);
 
 }

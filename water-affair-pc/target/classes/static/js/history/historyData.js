@@ -25,7 +25,7 @@ options.numberOfPages=5;
 
 $('#pagination').bootstrapPaginator(options);
 
-$('#searchBtn').click(function(e){
+function validatetable(){
 	var starttime = $("input[name='startTime']").val().replace(/-/g, "/");
 	var endTime = $("input[name='endTime']").val().replace(/-/g, "/");
 	if(starttime!='' && endTime != '' && starttime>=endTime){
@@ -63,7 +63,7 @@ $('#searchBtn').click(function(e){
 		$('#searchForm').submit();
 	}
 
-});
+};
 
 function showErrorInfo(stations){
 	toastr.options = {

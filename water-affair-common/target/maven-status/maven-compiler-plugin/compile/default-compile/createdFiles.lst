@@ -4,6 +4,7 @@ com\welltech\dao\history\WtControlLimitDao.class
 com\welltech\dao\sysSetting\PortManageDao.class
 com\welltech\security\dao\LoginUserDao.class
 com\welltech\entity\WtStationBase.class
+com\welltech\common\util\AliyunSmsUtils.class
 com\welltech\service\repair\RepairRecordServiceImpl.class
 com\welltech\dao\history\WtAlarmRecordDao.class
 com\welltech\service\impl\LoginServiceImpl.class
@@ -89,9 +90,11 @@ com\welltech\dto\WtStationBreakdownDto.class
 com\welltech\service\station\BossService.class
 com\welltech\service\statistics\StationStatisticService$1.class
 com\welltech\framework\aop\pagination\interceptor\PaginationInterceptor.class
+com\welltech\common\util\ExcelUtil.class
 com\welltech\entity\WtMenu.class
 com\welltech\service\sysSetting\OperatorManageService.class
 com\welltech\service\index\impl\UiElementServiceImpl.class
+com\welltech\dto\WtDataDto.class
 com\welltech\framework\aop\pagination\annotation\Paging.class
 com\welltech\dao\WtStationDao.class
 com\welltech\framework\dao\BaseCriteria$OrderColumn.class
@@ -174,5 +177,6 @@ com\welltech\framework\dao\DynamicQuerySqlBuilder.class
 com\welltech\security\config\SimpleLoginSuccessHandler.class
 com\welltech\service\realtime\RealtimeService.class
 com\welltech\service\statistics\TrendAnalysisService.class
+com\welltech\dto\WtDataVo.class
 com\welltech\security\config\WebSecurityConfig.class
 com\welltech\service\sysSetting\PortManageService.class

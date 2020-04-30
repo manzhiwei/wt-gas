@@ -1,6 +1,7 @@
 package com.welltech.service.history.impl;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -113,7 +114,7 @@ public class HistoryServiceImpl implements HistoryService{
 
 				for(Field f: fields){
 					f.setAccessible(true);
-					if(f.getName().matches("^[p][1-9]?\\d$")){
+					if(f.getName().matches("^[p][1-9]?\\d$")||f.getName().matches("^[p][1-9]?\\dFlag?$")){
 						//匹配p1~p32
 						try {
 							paramValues.put(f.getName(), f.get(dto));
@@ -124,6 +125,17 @@ public class HistoryServiceImpl implements HistoryService{
 				}
 
 				dto.setParamValues(paramValues);
+			}
+		}
+
+		for (int i = 0; i < result.size(); i++) {
+			Map<String,Object> paramValues = result.get(i).getParamValues();
+			for (int j = 1; j <= 32 ; j++) {
+				if(paramValues.get("p"+j)!=null){
+					BigDecimal tempValue = (BigDecimal) paramValues.get("p"+j);
+					String tempValue1 = (String) paramValues.get("p"+j+"Flag");
+					paramValues.put("p"+j,tempValue.setScale(2,BigDecimal.ROUND_HALF_UP)+tempValue1);
+				}
 			}
 		}
 

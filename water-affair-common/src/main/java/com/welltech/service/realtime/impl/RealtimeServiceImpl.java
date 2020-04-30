@@ -1,6 +1,7 @@
 package com.welltech.service.realtime.impl;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -49,7 +50,20 @@ public class RealtimeServiceImpl implements RealtimeService {
 	
 	@Override
 	public List<WtDataRawDto> listDataRaws(MyPage myPage, Integer[] pointIds) {
-		return this.listDataRaws(myPage, pointIds, 0);
+		List<WtDataRawDto> wtDataRawDtoList = this.listDataRaws(myPage, pointIds, 0);
+		for (int i = 0; i < wtDataRawDtoList.size(); i++) {
+			Map<String,Object> paramValues = wtDataRawDtoList.get(i).getParamValues();
+			for (int j = 1; j <= 32 ; j++) {
+				if(paramValues.get("p"+j)!=null){
+					BigDecimal tempValue = (BigDecimal) paramValues.get("p"+j);
+					String tempValue1 = (String) paramValues.get("p"+j+"Flag");
+					paramValues.put("p"+j,tempValue.setScale(2,BigDecimal.ROUND_HALF_UP)+tempValue1);
+				}
+			}
+			wtDataRawDtoList.get(i).setParamValues(paramValues);
+		}
+
+		return wtDataRawDtoList;
 	}
 
 	@Override

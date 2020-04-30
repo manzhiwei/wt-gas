@@ -3,12 +3,14 @@ $(document).ready(function(){
 });
    /* var isInitFilterSelect=false;*/
     function initFilterSelect(){
-        var str='<label >显示/隐藏列：</label>';
+        var str='<div class="checkbox checkbox-success checkbox-inline" ><input id = "selectAll" style="cursor:pointer;" type="checkbox" /><label for="selectAll"><b>全选</label></div>';
         var tableTh=$("#dataTable").find("thead").find("th");
 
         for(var i=0;i<tableTh.length;i++){//<i class="Hui-iconfont"></i>
             // str+=' <a class="toggle-vis" data-column="'+i+'">'+$("#dataTable").find("thead").find("th").eq(i).text()+'</a>--'
-           str+=' <a class="toggle-vis" data-column="'+i+'">'+$("#dataTable").find("thead").find("th").eq(i).text()+'</a>--'
+         /*  str+=' <a class="toggle-vis" data-column="'+i+'">'+$("#dataTable").find("thead").find("th").eq(i).text()+'</a>--'*/
+            str+='<div class="checkbox checkbox-success checkbox-inline ceshi" ><input style="cursor:pointer;" class="toggle-vis"  data-column="'+i+'" type="checkbox" id="'+i+'" /><label for="'+i+'"><b>'+$("#dataTable").find("thead").find("th").eq(i).text()+'</label></div>'
+           /*str+='<div style="padding:15px;margin-left:20px;" class="checkbox-inline i-checks" ><label><input style="margin:0;margin-left: -25px;cursor:pointer;" class="icheckbox_square-green toggle-vis" position: relative; data-column="'+i+'" type="checkbox" /><i></i>'+$("#dataTable").find("thead").find("th").eq(i).text()+'</label></div>'*/
 
            /* str+='<span class="toggle-vis" data-column="'+i+'"><input type="checkbox" checked="checked"  />'+tableTh.eq(i).text()+'</span>'*/
            // <div class="checkbox-inline i-checks"><label> <input type="checkbox" th:checked="${queryDto.firstLoad or queryDto.showMin}" name="showMin"/> <i></i>最小值</label></div>
@@ -123,7 +125,7 @@ function init(){
                 //datatable初始化
                 dataTable = $('#dataTable').DataTable({
                     dom: '<"html5buttons"B>lTfgtip',
-                    "ordering": false,
+                    "ordering": true,
                     "info": true,
                     "bLengthChange": true,
                     "iDisplayLength":10,
@@ -181,6 +183,15 @@ function init(){
                             }
                         }
                     },{
+                        targets : [5,6],
+                        mRender : function(data, type, full, meta) {
+                            if(data==0){
+                              return "否";
+                            }else{
+                              return "是";
+                            }
+                        }
+                    },{
                           targets : [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],
                           mRender : function(data, type, full, meta) {
                               if(data==0){
@@ -201,16 +212,37 @@ function init(){
                     $('[name=id]:checkbox').prop('checked', this.checked);
                     });*/
                 initFilterSelect();
-                $('.toggle-vis').on( 'click', function (e) {
-                        e.preventDefault();
+               $('.toggle-vis').on( 'click', function (e) {
+                       //2.全选第二步，如果有复选框没有被选中，那么全选不能被选中
+                       // 若所有的复选框都被选中了，那么全选要被选中
+                      if($(".ceshi input:checkbox").length=== $(".ceshi input:checked").length) {
+                             $("#selectAll").prop("checked", true);
+                         } else {
+                             $("#selectAll").prop("checked", false);
+                         }
+                       // Get the column API object
+                       var column = dataTable.column( $(this).attr('data-column') );
 
-                        // Get the column API object
-                        var column = dataTable.column( $(this).attr('data-column') );
+                       // Toggle the visibility
+                       column.visible( ! column.visible() );
+                       }
+                  );
+                  //全选
+                   $('#selectAll').on( 'click', function (e) {
+                        /*  e.preventDefault();*/
+                        //1.给所有的复选框选中  对应的各列显示应该为，选中就不显示，不选中就显示
+                         $(".toggle-vis").prop("checked", $(this).prop('checked'));
 
-                        // Toggle the visibility
-                        column.visible( ! column.visible() );
-                        }
-                   );
+                          for(var i =1 ;i<$("input:checkbox").length;i++){
+                               var column = dataTable.column( $("input:checkbox:eq('"+i+"')").attr('data-column') );
+
+                                    console.log($("input:checkbox:eq('"+i+"')").prop("checked"));
+                                    if(($("input:checkbox:eq('"+i+"')").prop("checked")&&column.visible())||(!$("input:checkbox:eq('"+i+"')").prop("checked")&&column.visible()===false)){
+                                            column.visible( ! column.visible() );
+                                    }
+                          }
+                          }
+                     );
 
         },
          error: function () {

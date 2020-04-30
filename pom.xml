@@ -11,6 +11,7 @@
   	<module>water-affair-mobile</module>
   	<module>water-affair-common</module>
   	<module>water-affair-batch</module>
+	  <module>water-affair-android</module>
   </modules>
   
   <parent>
@@ -96,13 +97,27 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
-			<version>1.2.38</version>
+			<version>1.2.67</version>
 		</dependency>
 	  <dependency>
 		  <groupId>org.apache.poi</groupId>
 		  <artifactId>poi</artifactId>
 		  <version>3.14</version>
 	  </dependency>
+	  <!-- https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-core -->
+	  <dependency>
+		  <groupId>com.aliyun</groupId>
+		  <artifactId>aliyun-java-sdk-core</artifactId>
+		  <version>4.4.2</version>
+	  </dependency>
+	  <!-- https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-dysmsapi -->
+	  <dependency>
+		  <groupId>com.aliyun</groupId>
+		  <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+		  <version>1.1.0</version>
+	  </dependency>
+
+
   </dependencies>
   <build>
     <plugins>

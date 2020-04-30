@@ -2,6 +2,7 @@ package com.welltech.dao.history;
 
 import com.welltech.dto.WtControlAirDto;
 import com.welltech.dto.WtProtocolDayDto;
+import com.welltech.entity.WtProtocolDay;
 
 import java.util.List;
 import java.util.Map;
@@ -50,4 +51,6 @@ public interface  WtProtocolDayDao {
     * @Date        2019-01-31 10:52
     */
     List<WtProtocolDayDto> listWtProtocolMinuter(Map<String, Object> map);
+
+    WtProtocolDay findLatestWtProtocolDay(String mcu);
 }

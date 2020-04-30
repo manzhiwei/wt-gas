@@ -39,7 +39,7 @@
                         <div class="ibox-content">
                             <form id="searchForm" action="/paraHistoryData.html" method="POST" class="form-horizontal m-b">
                                 <div class="row m-b-xs">
-                                    <div class="col-sm-6 m-b-xs">
+                                    <div class="col-sm-4 m-b-xs">
                                         <div class="input-group">
                                             <select data-placeholder="选择测点" id="pointIds"  style="display:none;min-width:475px;">
                                                 <option th:each="point: ${points}" th:text="${point.point}" th:value="${point.id}" th:selected="${not #arrays.isEmpty(pointIds) and #arrays.contains(pointIds, point.id)}"></option>
@@ -50,6 +50,12 @@
                                                 <input id="pointId" type="hidden" name="pointId" th:value="${pointId}"/>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-sm-2 m-b-xs">
+                                        <button type="button" class="btn btn-primary" data-toggle="collapse"
+                                                data-target="#hide1">
+                                            <label >显示/隐藏列：</label>
+                                        </button>
                                     </div>
                                     <div class="col-sm-2 m-b-xs">
                                         <div class="input-group">
@@ -68,15 +74,17 @@
                                             <button type="button" id="searchBtn" class="btn btn-sm btn-w-m btn-primary ladda-button" data-style="zoom-in" >查询</button>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
-                            <div class="row m-b-xs">
-                                <div class="col-sm-12 m-b-xs">
-                                    <div  class="input-group" id ="tableSelect">
-                                        <!--<div class="checkbox-inline i-checks"><label> <input type="checkbox" th:checked="${queryDto.firstLoad or queryDto.showMin}" name="showMin"/> <i></i>最小值</label></div>-->
+                                    <div class="col-sm-12 m-b-xs">
+                                        <div id ="hide1" class="collapse">
+                                            <div id ="tableSelect"   class="checkboxes" >
+
+                                            </div>
+                                            <!--<div class="checkbox-inline i-checks"><label> <input type="checkbox" th:checked="${queryDto.firstLoad or queryDto.showMin}" name="showMin"/> <i></i>最小值</label></div>-->
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+
+                            </form>
                             <div class="table-responsive text-nowrap text-center">
                                 <table id="dataTable" class="table table-striped table-list table-bordered" width="100%">
                                     <thead>
@@ -89,7 +97,7 @@
                                         <th>非甲烷总烃浓度入口(mg/m3)</th>
                                         <th>总烃浓度出口(mg/m3)</th>
                                         <th>总烃浓度入口(mg/m3)</th>
-                                        <th>甲苯浓度出口(mg/m3)</th>
+                                       <!-- <th>甲苯浓度出口(mg/m3)</th>
                                         <th>甲苯浓度入口(mg/m3)</th>
                                         <th>乙苯浓度出口(mg/m3)</th>
                                         <th>乙苯浓度入口(mg/m3)</th>
@@ -100,33 +108,33 @@
                                         <th>间二甲苯浓度出口(mg/m3)</th>
                                         <th>间二甲苯浓度入口(mg/m3)</th>
                                         <th>对二甲苯浓度出口(mg/m3)</th>
-                                        <th>对二甲苯浓度入口(mg/m3)</th>
+                                        <th>对二甲苯浓度入口(mg/m3)</th>-->
                                         <th>烟气温度出口(℃)</th>
-                                        <th>烟气温度入口(℃)</th>
+                                      <!--  <th>烟气温度入口(℃)</th>-->
                                         <th>烟气压力出口(Pa)</th>
-                                        <th>烟气压力入口(Pa)</th>
+                                      <!--  <th>烟气压力入口(Pa)</th>-->
                                         <th>烟气流速出口(m/s)</th>
-                                        <th>烟气流速入口(m/s)</th>
+                                       <!-- <th>烟气流速入口(m/s)</th>-->
                                         <th>烟气湿度出口(%)</th>
-                                        <th>烟气湿度入口(%)</th>
+                                     <!--   <th>烟气湿度入口(%)</th>-->
                                         <th>烟气含氧量出口(%)</th>
-                                        <th>烟气含氧量入口(%)</th>
+                                    <!--    <th>烟气含氧量入口(%)</th>-->
                                         <th>工况烟气流量出口(m3/h)</th>
-                                        <th>工况烟气流量入口(m3/h)</th>
+                                     <!--   <th>工况烟气流量入口(m3/h)</th>-->
                                         <th>标态烟气流量出口(m3/h)</th>
                                         <th>标态烟气流量入口(m3/h)</th>
                                         <th>非甲烷总烃排放速率出口(kg/h)</th>
-                                        <th>非甲烷总烃排放速率入口(kg/h)</th>
-                                        <th>SO2浓度出口(mg/m3)</th>
-                                        <th>SO2浓度入口(mg/m3)</th>
+                                      <!--  <th>非甲烷总烃排放速率入口(kg/h)</th>-->
+                                      <!--  <th>SO2浓度出口(mg/m3)</th>
+                                        <th>SO2浓度入口(mg/m3)</th>-->
                                         <th>NO浓度出口(mg/m3)</th>
                                         <th>NO浓度入口(mg/m3)</th>
                                         <th>NOX浓度出口(mg/m3)</th>
                                         <th>NOX浓度入口(mg/m3)</th>
-                                        <th>甲醇浓度出口(mg/m3)</th>
+                                        <!--<th>甲醇浓度出口(mg/m3)</th>
                                         <th>甲醇浓度入口(mg/m3)</th>
                                         <th>苯乙烯浓度出口(mg/m3)</th>
-                                        <th>苯乙烯浓度入口(mg/m3)</th>
+                                        <th>苯乙烯浓度入口(mg/m3)</th>-->
                                         <th>RTO效率</th>
                                         <th>空气1流量(ml/min)</th>
                                     <!--    <th>空气2流量(ml/min)</th>-->

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 /**
  * Created by Zhujia at 2017年8月4日 下午5:12:37
  */
-//@Service
+//@service
 public class CustomAccessDecisionManager implements AccessDecisionManager{
 
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)

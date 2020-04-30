@@ -5,18 +5,20 @@
 	<select id="findAllPointDtos" resultType="PointDto">
 		select
 		id,
-		point
+		point,
+		s.gateway_serial,
+		company_id
 		from
 		wt_station s
 	</select>
 
 	<select id="findAllPointOnCompany" resultType="PointDto">
-		SELECT s.id,point,u.company_id FROM wt_station s
+		SELECT s.id,point,u.company_id,s.gateway_serial FROM wt_station s
 		LEFT JOIN wt_user u ON u.company_id = s.company_id
 		WHERE s.company_id = #{companyId}
 	</select>
 	<select id="findAllPointOnParentId" resultType="PointDto">
-		SELECT s.id,POINT,wc.id FROM wt_station s
+		SELECT s.id,POINT,wc.id,s.gateway_serial FROM wt_station s
 		LEFT JOIN wt_company wc ON wc.id = s.company_id
 		WHERE wc.parent_id = #{companyId}
     </select>

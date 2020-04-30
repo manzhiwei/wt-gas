@@ -33,7 +33,7 @@ import org.springframework.stereotype.Service;
  * 最核心的地方，就是提供某个资源对应的权限定义， 即getAttributes方法返回的结果。 此类在初始化时， 应该取到所有资源及其对应角色的定义。
  * Created by Zhujia at 2017年8月4日 下午5:07:53
  */
-//@Service
+//@service
 public class CustomInvocationSecurityMetadataSourceService implements FilterInvocationSecurityMetadataSource {
 
 	// @Autowired

@@ -48,4 +48,5 @@ public class MyUserDetailsService implements UserDetailsService {
 //        }
 		return new User(user.getUsername(),user.getPassword(), authorities);
     }
+
 }

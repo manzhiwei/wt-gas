@@ -131,4 +131,8 @@
         order by wpd.time desc
     </select>
 
+    <select id="findLatestWtProtocolDay" resultType="WtProtocolDay" parameterType="string">
+        select * from wt_protocol_hour where mcu=#{mcu} order by time desc limit 1
+    </select>
+
 </mapper>

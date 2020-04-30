@@ -7,10 +7,21 @@ package com.welltech.dto;
  */
 public class PointDto {
 	private Integer id;
-	
+
 	private String point;
 
 	private Integer companyId;
+
+	//mcuId
+	private String gatewaySerial;
+
+	public String getGatewaySerial() {
+		return gatewaySerial;
+	}
+
+	public void setGatewaySerial(String gatewaySerial) {
+		this.gatewaySerial = gatewaySerial;
+	}
 
 	public Integer getCompanyId() {
 		return companyId;

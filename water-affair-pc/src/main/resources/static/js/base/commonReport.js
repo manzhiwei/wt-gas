@@ -1,3 +1,4 @@
+
 var setting = {
 	check: {
 		enable: true,
@@ -138,3 +139,74 @@ $("#reportType").change(function(){
 	});
 	$("#picker" + chartTypeValue).removeClass("hide");
 });
+
+function exportReport(){
+	var pointName = $("#pointName").val();
+	var pointId = $("#pointId").val();
+	var reportType = $("#reportType").val();
+	var startTime = $("#startTime").val();
+	var endTime = $("#endTime").val();
+	var date = $("#date").val();
+	var month = $("#month").val();
+	var year = $("#year").val();
+	if(pointName == null || pointId == null){
+	    alert("站点不能为空");
+        return;
+	}
+	if(reportType == null){
+	    alert("导出类型不能为空");
+	    return;
+	}
+	if(startTime == null){
+	    alert("导出起始时间不能为空");
+	    return;
+	}else if(endTime == null){
+	    alert("导出结束时间不能为空");
+	    return;
+	}else if(startTime > endTime){
+	    alert("起始时间不能大于结束时间");
+	    return;
+	}
+	if(reportType==1&&date==null){
+	    alert("请选择查询日期");
+	    return;
+	}
+
+	if(reportType==3&&month==null){
+        alert("请选择查询日期");
+        return;
+	}
+	if(reportType==5&&year==null){
+        alert("请选择查询日期");
+        return;
+	}
+	var param = {
+	    "pointName"  : pointName,
+	    "pointId"    : pointId,
+	    "reportType" : reportType,
+	    "startTime"  : startTime,
+	    "endTime"    : endTime,
+	    "date"       : date,
+	    "month"      : month,
+	    "year"       : year
+	}
+//	location.href = "exportDayReportExcel?staions="+stations+"&date="+date;
+	onPost("commonReportExport",param);
+}
+
+function onPost(url,data){
+	var temp = document.createElement("form");
+    temp.action = url;
+    temp.method = "post";
+    temp.style.display = "none";
+    for (var x in data) {
+        var opt = document.createElement("textarea");
+        opt.name = x;
+        opt.value = data[x];
+        // alert(opt.name)
+        temp.appendChild(opt);
+    }
+    document.body.appendChild(temp);
+    temp.submit();
+    return temp;
+}

@@ -67,15 +67,15 @@
 										<tr>
 											<th>单位 </th>
 											<th>测点名称 </th>
-											<th>项目编号</th>
+											<!--<th>项目编号</th>-->
 											<th>更新时间</th>
-											<th>总流量(万m3)</th>
+											<!--<th>总流量(万m3)</th>-->
 											<!-- 参数由后台配置 -->
 											<th th:each="item: ${params.values()}" th:if="${#strings.equals('1',item.display)}">
 												<span th:text="${item.paramName}"></span>
 												<span th:if="${not #strings.isEmpty(item.unit)}" th:text="' (' + ${item.unit} + ')'"></span>
 											</th>
-											<th>状态</th>
+											<!--<th>状态</th>-->
 											<!-- <th>电池状态</th>
 											<th>网络状态 (db)</th> -->
 											<!--<th>手机卡号</th>-->
@@ -89,27 +89,28 @@
 											<tr th:if="${not #lists.isEmpty(datas)}" th:each="data: ${datas}">
 												<td th:text="${data.companyName}">-</td>
 												<td th:text="${data.point}">-</td>
-												<td th:text="${data.projectCode}">-</td>
+												<!--<td th:text="${data.projectCode}">-</td>-->
 												<td>
 													<span th:if="${data.time} != null" th:text="${#dates.format(data.time, 'yyyy-MM-dd HH:mm:ss')}"></span>
 													<span th:if="${data.time} == null">-</span>
 												</td>
-												<td th:text = "${#numbers.formatDecimal(data.totalFlow/10000,1,2)}">-</td>
+												<!--<td th:text = "${#numbers.formatDecimal(data.totalFlow/10000,1,2)}">-</td>-->
 												<!-- 参数由后台配置 -->
-												<td th:each="item,iterStat: ${data.paramValues.entrySet()}" th:if="${iterStat.index} lt '32' and ${#strings.equals('1',params.get(item.getKey()).display)}">
+												<td th:each="item,iterStat: ${data.paramValues.entrySet()}" th:if="${iterStat.index} lt '32' and ${#strings.equals('1',params.get(item.getKey()).display)}"> <!---->
 
 													<!--<span th:unless= "${item.getValue()} == null" th:text="${#numbers.formatDecimal(item.getValue(),1,2)}"></span>-->
+													<span th:unless= "${item.getValue()} == null" th:text="${item.getValue()}"></span>
 													<!--${item.getValue()} != null and -->
-													<span th:if="${item.getValue()} != null and ${item.getKey()} ne 'p20' and ${item.getKey()} ne 'p22' "  th:text="${#numbers.formatDecimal(item.getValue(),1,2)}"></span><!-- 不为空 and ${item.getKey() != p22 -->
-													<span th:if="${item.getValue()} != null and ${item.getKey()} eq 'p20'"  th:text="${#numbers.formatDecimal(item.getValue(),1,0)} == 1 ? '开':'关'"></span><!-- 不为空 -->
+													<!--<span th:if="${item.getValue()} != null and ${item.getKey()} ne 'p20' and ${item.getKey()} ne 'p22' "  th:text="${#numbers.formatDecimal(item.getValue(),1,2)}"></span>--><!-- 不为空 and ${item.getKey() != p22 -->
+													<!--<span th:if="${item.getValue()} != null and ${item.getKey()} eq 'p20'"  th:text="${#numbers.formatDecimal(item.getValue(),1,0)} == 1 ? '开':'关'"></span>&lt;!&ndash; 不为空 &ndash;&gt;-->
 													<!--<span th:if="${item.getValue()} != null" th:if="${item.getKey() == 'p20'}" th:text="${#numbers.formatDecimal(item.getValue(),1,0) == 1 ? '开':'关' }"></span>&lt;!&ndash; 不为空且是p20(水泵状态) &ndash;&gt;-->
-													<span th:if="${item.getValue()} != null and ${item.getKey()} eq 'p22'and ${#numbers.formatDecimal(item.getValue(),1,2)} gt -0.00 "  th:text="${#numbers.formatDecimal(item.getValue(),1,2)}"></span>
-													<span th:if="${item.getValue()} != null and ${item.getKey()} eq 'p22'and ${#numbers.formatDecimal(item.getValue(),1,2)} le -0.00 "  th:text="0.00"></span>
+													<!--<span th:if="${item.getValue()} != null and ${item.getKey()} eq 'p22'and ${#numbers.formatDecimal(item.getValue(),1,2)} gt -0.00 "  th:text="${#numbers.formatDecimal(item.getValue(),1,2)}"></span>
+													<span th:if="${item.getValue()} != null and ${item.getKey()} eq 'p22'and ${#numbers.formatDecimal(item.getValue(),1,2)} le -0.00 "  th:text="0.00"></span>-->
 													<span th:if="${item.getValue()} == null">-</span><!-- 为空 -->
 												</td>
-												<td>
+												<!--<td>
 													<span th:text="${status==true?'正常':'测试'}"></span>
-												</td>
+												</td>-->
 												<!-- 电池
 												<td>
 													<span th:unless="${data.getBattery()} == null" th:text="${#numbers.formatInteger(data.getBattery(), 1)}"></span>

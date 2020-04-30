@@ -74,6 +74,7 @@ public class PageParamManageService {
 	 * @param stationId 
 	 * @param paramMap
 	 * @return
+	 * 这个函数的作用？
 	 */
 	public List<WtParam> findAllDisplayParams(Map paramMap, String stationId) {
 		WtStation station = stationDao.findStationById(Integer.parseInt(stationId));
@@ -373,12 +374,12 @@ public class PageParamManageService {
 
 			for(String param :params){
 
-				//TODO 循环遍历该参数是否要查询
+				//TODO 循环遍历该参数是否要查询,精确到小数点后两位
 				if((null!=paramMap.get(param) && "on".equals(((String[])paramMap.get(param))[0])) || queryDto.isFirstLoad()){
-					sb.append("ifnull(round(").append(param).append(",4),'-') as ").append(param).append(",");
-					avgSb.append("ifnull(round(AVG(").append(param).append("),4),'-') as ").append(param).append(",");
-					maxSb.append("ifnull(round(MAX(").append(param).append("),4),'-') as ").append(param).append(",");
-					minSb.append("ifnull(round(MIN(").append(param).append("),4),'-') as ").append(param).append(",");
+					sb.append("ifnull(round(").append(param).append(",2),'-') as ").append(param).append(",");
+					avgSb.append("ifnull(round(AVG(").append(param).append("),2),'-') as ").append(param).append(",");
+					maxSb.append("ifnull(round(MAX(").append(param).append("),2),'-') as ").append(param).append(",");
+					minSb.append("ifnull(round(MIN(").append(param).append("),2),'-') as ").append(param).append(",");
 				}
 			}
 
@@ -390,12 +391,12 @@ public class PageParamManageService {
 			map.put("column",sbColumn);
 			map.put("paramColumn", avgParamColumn);
 			if(StringUtils.isBlank(queryDto.getType())){
-				map.put("mcu","25769738752");
+				map.put("mcu","25769738752");//TODO 错误处理界面，需要一个
 			}else{
 				map.put("mcu",queryDto.getType());
 			}
-			long timeDiff = queryDto.getEndTime().getTime() - queryDto.getStartTime().getTime();	//开始时间和结束时间相差的毫秒数
-			int timeUnit = new BigDecimal(timeDiff).divide(new BigDecimal(1000 * 60 * 60 * 4)).setScale(0, BigDecimal.ROUND_UP).intValue();	//4小时为1个时间点,小数点向上进
+//			long timeDiff = queryDto.getEndTime().getTime() - queryDto.getStartTime().getTime();	//开始时间和结束时间相差的毫秒数
+//			int timeUnit = new BigDecimal(timeDiff).divide(new BigDecimal(1000 * 60 * 60 * 4)).setScale(0, BigDecimal.ROUND_UP).intValue();	//4小时为1个时间点,小数点向上进
 			map.put("startTime",queryDto.getStartTime());
 			map.put("endTime",queryDto.getEndTime());
 
@@ -420,6 +421,7 @@ public class PageParamManageService {
 						propertyUtilsBeanTarget.setNestedProperty(data, tarParam,propertyUtilsBeanSource.getNestedProperty(dtos.get(0), tarParam));
 						propertyUtilsBeanTarget.setNestedProperty(data1, tarParam,propertyUtilsBeanSource.getNestedProperty(dtos.get(0), tarParam));
 					} catch (Exception e) {
+						e.printStackTrace();
 					}
 				}
 				WtParamDataDto heiChouData = null,heiChouData1=null,
@@ -474,8 +476,11 @@ public class PageParamManageService {
 				dataAvg.setDataType("3");
 			}
 			datas = new ArrayList<WtParamDataDto>();
-			datas.add(dataAvg);
+			if(null!=dataAvg){
+				datas.add(dataAvg);
+			}
 			result.put("avgDatas", datas);
+
 		}
 		return result;
 	}
@@ -529,7 +534,8 @@ public class PageParamManageService {
 			//获取最小值,最大值,平均值
 			map.put("paramColumn", avgParamColumn);
 			WtParamDataDto dataAvg = pageParamManageDao.getReportData(map);
-			if(null!=datas && datas.size()>0){
+			//在年的地方加上dataAvg!=null 是因为年平均查不出来
+			if(null!=datas && datas.size()>0&&null!=dataAvg){
 				List<WtParamDataDto> dtos = (List<WtParamDataDto>)result.get("maxDatas");
 				List<WtParamDataDto> dtos1 = (List<WtParamDataDto>)result.get("minDatas");
 
@@ -538,6 +544,8 @@ public class PageParamManageService {
 				//将平均值对应的tarP对应出来
 				PropertyUtilsBean propertyUtilsBeanSource = new PropertyUtilsBean();
 				PropertyUtilsBean propertyUtilsBeanTarget = new PropertyUtilsBean();
+				//data有可能为空
+
 				for (int n = 1; n < 33; n++) {
 					String param = "p"+n;
 					String tarParam = "tarP"+n;
@@ -549,6 +557,7 @@ public class PageParamManageService {
 						e.printStackTrace();
 					}
 				}
+
 				WtParamDataDto heiChouData = null,heiChouData1=null,diBiaoData = null,diBiaoData1 = null;
 				if("1".equals(station.getStationJudgeType())){	//黑臭
 					heiChouData = this.getHeiChou(data, station);
@@ -603,11 +612,11 @@ public class PageParamManageService {
 					result.put("pollutant", getParamNameByParam(station,pollutant,mergeDibiao));
 				}
 			}
+			datas = new ArrayList<WtParamDataDto>();
 			if(null!=dataAvg){
 				dataAvg.setDataType("3");
+				datas.add(dataAvg);
 			}
-			datas = new ArrayList<WtParamDataDto>();
-			datas.add(dataAvg);
 			result.put("avgDatas", datas);
 		}
 		return result;
@@ -746,12 +755,13 @@ public class PageParamManageService {
 					result.put("pollutant", getParamNameByParam(station,pollutant,mergeDibiao));
 				}
 			}
+			datas = new ArrayList<WtParamDataDto>();
 			if(null!=dataAvg){
 				dataAvg.setDataType("3");
+				datas.add(dataAvg);
 			}
-			datas = new ArrayList<WtParamDataDto>();
-			datas.add(dataAvg);
 			result.put("avgDatas", datas);
+
 		}
 		return result;
 	}
@@ -839,12 +849,6 @@ public class PageParamManageService {
 		Map<String, Object> result = new HashMap<String, Object>();
 		//日报最近24小时每小时统计一次
 		//先获取显示的参数
-		/*List<String> params = new ArrayList<>();
-		if("1".equals(station.getStationStandard())){
-			params = pageParamManageDao.getDisplayParam();
-		}else{
-			params = pageParamManageDao.findAllDisplayParams(station.getId()+"");
-		}*/
 		StringBuilder avgSb = new StringBuilder(1024);	//字段字符串拼接
 		StringBuilder maxSb = new StringBuilder(1024);	//字段字符串拼接
 		StringBuilder minSb = new StringBuilder(1024);	//字段字符串拼接
@@ -901,6 +905,7 @@ public class PageParamManageService {
 						e.printStackTrace();
 					}
 				}
+				//计算评价结果
 				WtParamDataDto heiChouData = null,heiChouData1=null,diBiaoData = null,diBiaoData1 = null;
 				if("1".equals(station.getStationJudgeType())){	//黑臭
 					heiChouData = this.getHeiChou(data, station);
@@ -908,7 +913,6 @@ public class PageParamManageService {
 				}else {
 					diBiaoData = this.getDiBiao(data, station);
 					diBiaoData1 = this.getDiBiao(data1, station);
-					
 				}
 
 				String pollutant = "";
@@ -948,12 +952,13 @@ public class PageParamManageService {
 					result.put("pollutant", getParamNameByParam(station,pollutant,mergeDibiao));
 				}
 			}
+			datas = new ArrayList<WtParamDataDto>();
 			if(null!=dataAvg){
 				dataAvg.setDataType("3");
+				datas.add(dataAvg);
 			}
-			datas = new ArrayList<WtParamDataDto>();
-			datas.add(dataAvg);
 			result.put("avgDatas", datas);
+
 		}
 		return result;
 	}

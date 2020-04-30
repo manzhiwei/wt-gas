@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/water-affair.iml" filepath="$PROJECT_DIR$/water-affair.iml" />
+      <module fileurl="file://$PROJECT_DIR$/water-affair-android/water-affair-android.iml" filepath="$PROJECT_DIR$/water-affair-android/water-affair-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/water-affair-batch/water-affair-batch.iml" filepath="$PROJECT_DIR$/water-affair-batch/water-affair-batch.iml" />
       <module fileurl="file://$PROJECT_DIR$/water-affair-common/water-affair-common.iml" filepath="$PROJECT_DIR$/water-affair-common/water-affair-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/water-affair-mobile/water-affair-mobile.iml" filepath="$PROJECT_DIR$/water-affair-mobile/water-affair-mobile.iml" />

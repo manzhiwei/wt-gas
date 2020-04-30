@@ -3,11 +3,9 @@
  */
 package com.welltech.controller;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.welltech.entity.WtParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -54,7 +52,9 @@ public class HistoryDataController {
     	if(alias){
     		model.addAttribute("params", uiElementService.getParamsByStationId(pointId));
     	} else{
-    		model.addAttribute("params", uiElementService.getParams());
+
+			model.addAttribute("params",uiElementService.getParams());
+
     	}
     	if(StringUtils.isBlank(dataType)){
     		dataType="1";
@@ -76,7 +76,23 @@ public class HistoryDataController {
 		} catch(NullPointerException e){
 			return "404";
 		}
-		model.addAttribute("params", uiElementService.getParamsByStationId(stationId));
+		Map<String, WtParam> menus = uiElementService.getParamsByStationId(stationId);
+		Map<String, WtParam> newMap = new LinkedHashMap<>();
+		if(menus.containsKey("p11")){
+			newMap.put("p11",menus.get("p11"));
+			menus.remove("p11");
+		}
+		newMap.putAll(menus);
+		model.addAttribute("params", newMap);
+		// model.addAttribute("params", uiElementService.getParamsByStationId(stationId));
+		/*Map<String, WtParam> menus = uiElementService.getParams();
+			Map<String, WtParam> newMap = new LinkedHashMap<>();
+			if(menus.containsKey("p11")){
+				newMap.put("p11",menus.get("p11"));
+				menus.remove("p11");
+			}
+			newMap.putAll(menus);
+    		model.addAttribute("params", newMap);*/
 		model.addAttribute("station", historyService.getStation(stationId));
 		model.addAttribute("stationId", stationId);
 		return "mobile/history";

@@ -393,6 +393,326 @@ public class WtProtocolDay {
 
     private Float p32Cou;
 
+    private String p1Flag;
+
+    private String p2Flag;
+
+    private String p3Flag;
+
+    private String p4Flag;
+
+    private String p5Flag;
+
+    private String p6Flag;
+
+    private String p7Flag;
+
+    private String p8Flag;
+
+    private String p9Flag;
+
+    private String p10Flag;
+
+    private String p11Flag;
+
+    private String p12Flag;
+
+    private String p13Flag;
+
+    private String p14Flag;
+
+    private String p15Flag;
+
+    private String p16Flag;
+
+    private String p17Flag;
+
+    private String p18Flag;
+
+    private String p19Flag;
+
+    private String p20Flag;
+
+    private String p21Flag;
+
+    private String p22Flag;
+
+    private String p23Flag;
+
+    private String p24Flag;
+
+    private String p25Flag;
+
+    private String p26Flag;
+
+    private String p27Flag;
+
+    private String p28Flag;
+
+    private String p29Flag;
+
+    private String p30Flag;
+
+    private String p31Flag;
+
+    private String p32Flag;
+
+    public String getP1Flag() {
+        return p1Flag;
+    }
+
+    public void setP1Flag(String p1Flag) {
+        this.p1Flag = p1Flag;
+    }
+
+    public String getP2Flag() {
+        return p2Flag;
+    }
+
+    public void setP2Flag(String p2Flag) {
+        this.p2Flag = p2Flag;
+    }
+
+    public String getP3Flag() {
+        return p3Flag;
+    }
+
+    public void setP3Flag(String p3Flag) {
+        this.p3Flag = p3Flag;
+    }
+
+    public String getP4Flag() {
+        return p4Flag;
+    }
+
+    public void setP4Flag(String p4Flag) {
+        this.p4Flag = p4Flag;
+    }
+
+    public String getP5Flag() {
+        return p5Flag;
+    }
+
+    public void setP5Flag(String p5Flag) {
+        this.p5Flag = p5Flag;
+    }
+
+    public String getP6Flag() {
+        return p6Flag;
+    }
+
+    public void setP6Flag(String p6Flag) {
+        this.p6Flag = p6Flag;
+    }
+
+    public String getP7Flag() {
+        return p7Flag;
+    }
+
+    public void setP7Flag(String p7Flag) {
+        this.p7Flag = p7Flag;
+    }
+
+    public String getP8Flag() {
+        return p8Flag;
+    }
+
+    public void setP8Flag(String p8Flag) {
+        this.p8Flag = p8Flag;
+    }
+
+    public String getP9Flag() {
+        return p9Flag;
+    }
+
+    public void setP9Flag(String p9Flag) {
+        this.p9Flag = p9Flag;
+    }
+
+    public String getP10Flag() {
+        return p10Flag;
+    }
+
+    public void setP10Flag(String p10Flag) {
+        this.p10Flag = p10Flag;
+    }
+
+    public String getP11Flag() {
+        return p11Flag;
+    }
+
+    public void setP11Flag(String p11Flag) {
+        this.p11Flag = p11Flag;
+    }
+
+    public String getP12Flag() {
+        return p12Flag;
+    }
+
+    public void setP12Flag(String p12Flag) {
+        this.p12Flag = p12Flag;
+    }
+
+    public String getP13Flag() {
+        return p13Flag;
+    }
+
+    public void setP13Flag(String p13Flag) {
+        this.p13Flag = p13Flag;
+    }
+
+    public String getP14Flag() {
+        return p14Flag;
+    }
+
+    public void setP14Flag(String p14Flag) {
+        this.p14Flag = p14Flag;
+    }
+
+    public String getP15Flag() {
+        return p15Flag;
+    }
+
+    public void setP15Flag(String p15Flag) {
+        this.p15Flag = p15Flag;
+    }
+
+    public String getP16Flag() {
+        return p16Flag;
+    }
+
+    public void setP16Flag(String p16Flag) {
+        this.p16Flag = p16Flag;
+    }
+
+    public String getP17Flag() {
+        return p17Flag;
+    }
+
+    public void setP17Flag(String p17Flag) {
+        this.p17Flag = p17Flag;
+    }
+
+    public String getP18Flag() {
+        return p18Flag;
+    }
+
+    public void setP18Flag(String p18Flag) {
+        this.p18Flag = p18Flag;
+    }
+
+    public String getP19Flag() {
+        return p19Flag;
+    }
+
+    public void setP19Flag(String p19Flag) {
+        this.p19Flag = p19Flag;
+    }
+
+    public String getP20Flag() {
+        return p20Flag;
+    }
+
+    public void setP20Flag(String p20Flag) {
+        this.p20Flag = p20Flag;
+    }
+
+    public String getP21Flag() {
+        return p21Flag;
+    }
+
+    public void setP21Flag(String p21Flag) {
+        this.p21Flag = p21Flag;
+    }
+
+    public String getP22Flag() {
+        return p22Flag;
+    }
+
+    public void setP22Flag(String p22Flag) {
+        this.p22Flag = p22Flag;
+    }
+
+    public String getP23Flag() {
+        return p23Flag;
+    }
+
+    public void setP23Flag(String p23Flag) {
+        this.p23Flag = p23Flag;
+    }
+
+    public String getP24Flag() {
+        return p24Flag;
+    }
+
+    public void setP24Flag(String p24Flag) {
+        this.p24Flag = p24Flag;
+    }
+
+    public String getP25Flag() {
+        return p25Flag;
+    }
+
+    public void setP25Flag(String p25Flag) {
+        this.p25Flag = p25Flag;
+    }
+
+    public String getP26Flag() {
+        return p26Flag;
+    }
+
+    public void setP26Flag(String p26Flag) {
+        this.p26Flag = p26Flag;
+    }
+
+    public String getP27Flag() {
+        return p27Flag;
+    }
+
+    public void setP27Flag(String p27Flag) {
+        this.p27Flag = p27Flag;
+    }
+
+    public String getP28Flag() {
+        return p28Flag;
+    }
+
+    public void setP28Flag(String p28Flag) {
+        this.p28Flag = p28Flag;
+    }
+
+    public String getP29Flag() {
+        return p29Flag;
+    }
+
+    public void setP29Flag(String p29Flag) {
+        this.p29Flag = p29Flag;
+    }
+
+    public String getP30Flag() {
+        return p30Flag;
+    }
+
+    public void setP30Flag(String p30Flag) {
+        this.p30Flag = p30Flag;
+    }
+
+    public String getP31Flag() {
+        return p31Flag;
+    }
+
+    public void setP31Flag(String p31Flag) {
+        this.p31Flag = p31Flag;
+    }
+
+    public String getP32Flag() {
+        return p32Flag;
+    }
+
+    public void setP32Flag(String p32Flag) {
+        this.p32Flag = p32Flag;
+    }
+
     public Integer getId() {
         return id;
     }

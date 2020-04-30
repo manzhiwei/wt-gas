@@ -1,19 +1,24 @@
 package com.welltech.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.alibaba.fastjson.JSONObject;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.welltech.common.util.OperateCodeEnum;
 import com.welltech.service.history.OperateHistoryServiceImpl;
+import sun.rmi.runtime.Log;
+
+import java.util.Map;
 
 /**
  * Created by peter on 17-7-13.
@@ -71,6 +76,20 @@ public class RootController {
     @RequestMapping(value = { "/error" }, method = RequestMethod.GET)
     public String error(){
         return "500";
+    }
+
+    @RequestMapping(value = {"/androidLogin"},method = RequestMethod.POST)
+    @ResponseBody
+    public boolean androidLogin(@RequestBody Map<String,String> map){
+
+        String name = map.get("name");
+        String password = map.get("password");
+        System.out.println(name+":"+password);
+
+        if(name.equals("admin")&&password.equals("123"))
+            return true;
+        else
+            return false;
     }
 
 }

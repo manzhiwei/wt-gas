@@ -104,8 +104,19 @@ public class UiElementServiceImpl implements UiElementService {
 					WtParam wt3 = new WtParam();
 					wt3.setParam("p"+temp+"Cou");
 					wt3.setParamName(params.get(i).getParamName()+"累积量");
-					wt3.setUnit(params.get(i).getUnit());
+					if(params.get(i).getUnit().contains("m3")){
+						wt3.setUnit("m3");
+					}else{
+						wt3.setUnit("");
+					}
+
 					params1.add(wt3);
+
+					WtParam wt4 = new WtParam();
+					wt4.setParam("p"+temp+"Flag");
+					wt4.setParamName(params.get(i).getParamName()+"标志值");
+					wt4.setUnit("");
+					params1.add(wt4);
 				}
 			}
 		}

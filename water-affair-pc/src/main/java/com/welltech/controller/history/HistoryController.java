@@ -55,8 +55,14 @@ public class HistoryController {
 			pointDtoList = uiElementService.findAllPointDtos();
 			pointIds = new Integer[pointDtoList.size()];
 			if(pointDtoList != null){
+				//pointIds[0] = pointDtoList.get(0).getId();
 				for (int i = 0;i<pointDtoList.size();i++ ){
-					pointIds[i] = pointDtoList.get(i).getId();
+					if(pointDtoList.get(i).getCompanyId()!=1){//查找数采仪数据时，默认id最小数采仪的数据
+						pointIds[0] = pointDtoList.get(i).getId();
+					}else {
+						pointIds[i] = pointDtoList.get(i).getId();
+					}
+
 				}
 			}
 		}
@@ -190,7 +196,12 @@ public class HistoryController {
 			pointIds = new Integer[pointDtoList.size()];
 			if(pointDtoList != null){
 				for (int i = 0;i<pointDtoList.size();i++ ){
-					pointIds[i] = pointDtoList.get(i).getId();
+					//pointIds[i] = pointDtoList.get(i).getId();
+					if(pointDtoList.get(i).getCompanyId()!=1){
+						pointIds[0] = pointDtoList.get(i).getId();
+					}else {
+						pointIds[i] = pointDtoList.get(i).getId();
+					}
 				}
 			}
 		}
@@ -378,7 +389,7 @@ public class HistoryController {
             pointIds = new Integer[pointDtoList.size()];
             if(pointDtoList != null){
                 for (int i = 0;i<pointDtoList.size();i++ ){
-                    pointIds[i] = pointDtoList.get(i).getId();
+                   pointIds[i] = pointDtoList.get(i).getId();
                 }
             }
         }
@@ -429,7 +440,8 @@ public class HistoryController {
             pointIds = new Integer[pointDtoList.size()];
             if(pointDtoList != null){
                 for (int i = 0;i<pointDtoList.size();i++ ){
-                    pointIds[i] = pointDtoList.get(i).getId();
+                   pointIds[i] = pointDtoList.get(i).getId();
+
                 }
             }
         }

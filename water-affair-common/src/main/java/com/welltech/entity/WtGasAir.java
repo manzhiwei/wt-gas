@@ -20,6 +20,26 @@ public class WtGasAir {
     private Integer currentControlStat;
 
     private Integer currentRunStat;
+    //TODO 新增协议内容
+    private Integer  ventilateMode;
+
+    private Integer  ventilateStatus;
+
+    public Integer getVentilateMode() {
+        return ventilateMode;
+    }
+
+    public void setVentilateMode(Integer ventilateMode) {
+        this.ventilateMode = ventilateMode;
+    }
+
+    public Integer getVentilateStatus() {
+        return ventilateStatus;
+    }
+
+    public void setVentilateStatus(Integer ventilateStatus) {
+        this.ventilateStatus = ventilateStatus;
+    }
 
     public Integer getId() {
         return id;

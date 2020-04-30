@@ -3,6 +3,8 @@
  */
 package com.welltech.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -10,8 +12,10 @@ import java.util.Date;
  */
 public class WtParamDataDto {
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date startDate;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date endDate;
 
 	/**
